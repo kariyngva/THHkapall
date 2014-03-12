@@ -1,0 +1,40 @@
+body {
+    position: relative;
+    width: 1000px;
+}
+
+.nav {
+    background-color: rgba(0,0,0, .5);
+    display: block;
+    position: absolute;
+    left: -220px;
+    width: 200px;
+}
+.nav:hover,
+.nav:focus,
+.nav:active {
+  left: 0;
+}
+
+
+.deck {
+    border: 1px solid blue;
+}
+/** ** card styls ** **/
+.card {
+    width: 100px;
+    height: 150px;
+    border: 1px solid red;
+}
+
+.heart {
+
+}
+
+.spade {
+
+}
+
+.diamond {
+
+}

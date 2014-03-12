@@ -25,16 +25,21 @@ body {
     width: 100px;
     height: 150px;
     border: 1px solid red;
+    display: inline-block;
 }
 
 .heart {
-
+    background: url(i/h1.png) 0 0 no-repeat;
 }
 
 .spade {
+    background: url(i/s1.png) 0 0 no-repeat;
+}
 
+.leaf {
+    background: url(i/l1.png) 0 0 no-repeat;
 }
 
 .diamond {
-
+    background: url(i/t1.png) 0 0 no-repeat;
 }

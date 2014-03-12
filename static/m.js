@@ -7,17 +7,16 @@ var $ = jQuery,
     //Bindum smell á stokk.
     $('.deck').on('click', function (e) {
         var link = $('<a href="deck.html">derp</a>');
-        e.preventDefault();
-        ;;;window.console&&console.log( ['mm'] );
-        //
+        //e.preventDefault();
+
         $html.addClass('ajax-wait');
         $.get(
-              link.attr('href')
+              //link.attr('href')
+              'deck.html'
             )
           .done(function(data) {
-              ;;;window.console&&console.log( [data] );
-              data = $(data);
-              ;;;window.console&&console.log( [data.find('.card')] );
+              res = $(data);
+              ;;;window.console&&console.log( [res] );
             })
           .always(function() {
               $html.removeClass('ajax-wait');

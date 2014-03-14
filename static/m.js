@@ -10,17 +10,23 @@ var $ = jQuery,
         //e.preventDefault();
 
         $html.addClass('ajax-wait');
-        $.get(
+        /*$.get(
               //link.attr('href')
-              'deck.html'
+              'deck.html',
+              "json"
             )
           .done(function(data) {
-              res = $(data);
-              ;;;window.console&&console.log( [res] );
+            ;;;window.console&&console.log( [data] );
+              //res = $(data);
+              //;;;window.console&&console.log( [res] );
             })
           .always(function() {
               $html.removeClass('ajax-wait');
-            });
+            });*/
+        $.get( "deck.html", function( data ) {
+          ;;;window.console&&console.log( ['mm'] );
+          ;;;window.console&&console.log( [data.value] );
+        }, "json" );
     });
 
 })($);

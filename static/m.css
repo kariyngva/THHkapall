@@ -43,3 +43,8 @@ body {
 .diamond {
     background: url(i/t1.png) 0 0 no-repeat;
 }
+
+.row {
+    text-align: center;
+    margin-bottom: -40px;
+}

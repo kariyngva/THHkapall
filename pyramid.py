@@ -14,11 +14,11 @@ class Pyramid:
 		self.score = 0
 		self.difficulty = difficulty
 		self.tempPyramid = []
-		for i in range(len(self.pyramid))
+		for i in range(len(self.pyramid)):
 			self.tempPyramid.append(self.pyramid[i])
 		self.tempDrawDeck = []
-			for i in range(len(self.pyramid))
-				self.tempDrawDeck.append(drawDeck[i])
+		for i in range(len(self.drawDeck)):
+			self.tempDrawDeck.append(self.drawDeck[i])
 	
 	#byggir píramídann sjálfann sem lista af listum
 	def buildPyr(self):

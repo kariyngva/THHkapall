@@ -48,7 +48,8 @@ var $ = jQuery,
         $.ajax({
           url: link.attr('href')
         }).done(function(data) {
-            ;;;window.console&&console.log( [data] );
+            $('.difficulty a').removeClass('current');
+            link.addClass('current');
           });
       });
 

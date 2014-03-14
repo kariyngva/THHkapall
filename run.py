@@ -1,6 +1,8 @@
 #coding=UTF-8
 from bottle import route, run, template, post, request, static_file
+from pyramid import *
 
+#pyramid = new pyramid()
 
 @route('/')
 def index():
@@ -15,7 +17,7 @@ def drawFromDeck():
 
 @route('/setDifficulty/:difficulty')
 def setDifficulty(difficulty='easy'):
-    #pyramid.setDifficulty(difficulty)
+    pyramid.setDifficulty(difficulty)
 
 @route('/static/<filename>')
 def server_static(filename):

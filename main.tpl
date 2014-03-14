@@ -19,14 +19,23 @@
           <li><a href="/url">New game</a></li>
           <li><a href="/url">Reset game</a></li>
           <li><a href="/url">Undo last move</a></li>
-          <li><a href="/url">Set difficulty</a></li>
+          <li class="difficulty">
+            <span>Set difficulty</span>
+            <ul>
+              <li><a href="/setDifficulty/easy">Easy</a></li>
+              <li><a href="/setDifficulty/normal">Normal</a></li>
+              <li><a href="/setDifficulty/hard">Hard</a></li>
+            </ul>
+          </li>
         </ul>
     </div>
 
+    <div class="score">0</div>
 
 
+<div class="decks">
     <div class="drawdeck">
-        <div class="card heart">
+        <div class="card hearts">
             <span class="value">5</span>
         </div>
     </div>
@@ -34,6 +43,8 @@
     <div class="trashdeck">
 
     </div>
+</div>
+
 
     <div class="discard">
 
@@ -43,14 +54,14 @@
 
         <div class="row r1">
 
-            <div class="card heart">
+            <div class="card hearts">
                 <span class="value">9</span>
             </div>
 
         </div>
 
         <div class="row r2">
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
             <div class="card diamond">
@@ -59,101 +70,101 @@
         </div>
 
         <div class="row r3">
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
         </div>
 
         <div class="row r4">
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
         </div>
 
         <div class="row r5">
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
         </div>
 
         <div class="row r6">
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
 
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
         </div>
 
         <div class="row r7">
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spade">
+            <div class="card spades">
                 <span class="value">2</span>
             </div>
         </div>

@@ -2,31 +2,55 @@
 
 var $ = jQuery,
     $bdy = $('body'),
-    $html = $('html');
+    $html = $('html'),
+    drawDeck = $('.drawdeck'),
+    trashDeck = $('.trashdeck');
 
     //Bindum smell á stokk.
-    $('.deck').on('click', function (e) {
+    drawDeck.on('click', function (e) {
         var link = $('<a href="deck.html">derp</a>');
+
+        //passa að láta click + drag cancela click event.
         //e.preventDefault();
 
         $html.addClass('ajax-wait');
-        /*$.get(
-              //link.attr('href')
-              'deck.html',
-              "json"
-            )
+        $.get('http://localhost:8080/drawFromDeck')
           .done(function(data) {
-            ;;;window.console&&console.log( [data] );
-              //res = $(data);
-              //;;;window.console&&console.log( [res] );
+              if(data.lastcard == true)
+              {
+
+              }
+              else
+              {
+                //Overwrite the card in the trashdeck
+                newTrashCard = drawDeck.find('.card');
+                trashDeck.empty();
+                trashDeck.prepend(newTrashCard);
+                card = $('<div class="card ' + data.suit + '"><span class="value">' + data.rank + '</span></div>');
+
+                //Get a new card from the drawDeck deck
+                if(data.rank === "king")
+                {
+                  card.addClass('king');
+                }
+                drawDeck.prepend(card);
+              }
             })
           .always(function() {
               $html.removeClass('ajax-wait');
-            });*/
-        $.get( "deck.html", function( data ) {
-          ;;;window.console&&console.log( ['mm'] );
-          ;;;window.console&&console.log( [data.value] );
-        }, "json" );
+            });
     });
+
+    $('.difficulty a').on('click', function (e) {
+        e.preventDefault();
+
+        var link = $(this);
+        $.ajax({
+          url: link.attr('href')
+        }).done(function(data) {
+            ;;;window.console&&console.log( [data] );
+          });
+      });
+
 
 })($);

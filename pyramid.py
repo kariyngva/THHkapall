@@ -119,6 +119,7 @@ class Pyramid:
 				self.updateRem(i2, j2)
 				self.discardPile.append(self.pyramid[i1][j1][0])
 				self.discardPile.append(self.pyramid[i2][j2][0])
+				self.score += 200
 				return True
 			return False
 		return False
@@ -136,6 +137,7 @@ class Pyramid:
 					self.discardPile.append(drawDeck.pop)
 				else:
 					self.discardPile.append(trashDeck.pop)
+				self.score += 200
 				return True
 			return False
 		return False

@@ -64,12 +64,12 @@ class Pyramid:
 	#dregur spil úr bunka og setur það í trashdeck
 	#þá sést næsta spil í drawDeck
 	def drawDeckdraw(self):
-		saveState()
+		#self.saveState()
 		if len(self.drawDeck) > 0: #ef við eigum spil eftir í drawDeck
-			self.trashDeck.append(self.drawDeck.pop())
+			self.trashDeck.append(self.drawDeck.pop(-1))
 		elif self.difficulty > 0: #ef að við meigum nota spilin aftur
 			for i in range(len(trashDeck)):
-				drawDeck.append(trashDeck.pop(-1))
+				drawDeck.append(trashDeck.pop())
 				difficulty = difficulty -1
 		else:
 			return -1
@@ -114,11 +114,11 @@ class Pyramid:
 	def pyramidToPyramid(self, i1, j1, i2, j2):
 		if self.checkFree(i2, j2):
 			if self.pyramid[i1][j1][0].value + self.pyramid[i2][j2][0].value == 13:
-				saveState()
+				#self.saveState()
 				self.updateRem(i1, j1)
 				self.updateRem(i2, j2)
-				discardPile.append(self.pyramid[i1][j1][0])
-				discardPile.append(self.pyramid[i2][j2][0])
+				self.discardPile.append(self.pyramid[i1][j1][0])
+				self.discardPile.append(self.pyramid[i2][j2][0])
 				return True
 			return False
 		return False
@@ -129,13 +129,13 @@ class Pyramid:
 	def deckToPyramid(self, fromDraw, card, i, j):
 		if self.checkFree(i, j):
 			if card.value + self.pyramid[i][j][0].value == 13:
-				saveState()
+				#self.saveState()
 				self.updateRem(i, j)
-				discardPile.append(self.pyramid[i2][j2][0].value)
+				self.discardPile.append(self.pyramid[i][j][0])
 				if fromDraw:
-					discardPile.append(drawDeck.pop)
+					self.discardPile.append(drawDeck.pop)
 				else:
-					discardPile.append(trashDeck.pop)
+					self.discardPile.append(trashDeck.pop)
 				return True
 			return False
 		return False

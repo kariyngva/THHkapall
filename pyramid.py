@@ -4,36 +4,37 @@ from Deck import *
 class Pyramid:
 
 	def __init__(self, difficulty):
-		self.deck = Deck()
-		self.pyramid = self.buildPyr()
-		self.drawDeck = []
-		self.trashDeck = []
-		self.discardPile = []
+		self.deck = Deck() #stokkurinn
+		self.pyramid = self.buildPyr() #hluti af stokknum verður pýramíddi
+		self.drawDeck = [] #fyrri stokkurinn af spilum
+		self.trashDeck = []	#seinni stokkurinn af spilum
+		self.discardPile = [] #spilin sem að hafa verið tekin út
 		for i in range(0,len(self.deck.cards)):
 			self.drawDeck.append(self.deck.draw())
 		self.score = 0
-		self.difficulty = difficulty
-		self.tempPyramid = []
+		self.difficulty = difficulty #því hærri tala því auðveldari er leikurinn
+		self.tempPyramid = [] #state savefyrir restart same game
 		for i in range(len(self.pyramid)):
 			self.tempPyramid.append(self.pyramid[i])
-		self.tempDrawDeck = []
+		self.tempDrawDeck = []#state savefyrir restart same game
 		for i in range(len(self.drawDeck)):
 			self.tempDrawDeck.append(self.drawDeck[i])
 	
 	#byggir píramídann sjálfann sem lista af listum
+	#hvert stak í listunum inniheldur spil og hnit fyrir foreldri og börn sbr. tré
 	def buildPyr(self):
 	  """ 
 	  returns list of lists, each inner list containing one level of pyramid
 	  [[[h0_0]],[[h1_0],[h1_1]], ...]
 	  """
-	  pyr = []
+	  pyr = [] #tímabundin breyta
 
-	  for i in range (0,7):
-		thisLevel = []
+	  for i in range (0,7): #sex hæðir
+		thisLevel = [] #hver hæð
 	  
 		for j in range (0,i+1):
 		  nxtCard = self.deck.draw() # or whatever you get the idea
-		  pyrSpotSpecs = [nxtCard, self.parents(i,j), self.children(i,j)]
+		  pyrSpotSpecs = [nxtCard, self.parents(i,j), self.children(i,j)] #hver eind
 		  thisLevel.append(pyrSpotSpecs)
 
 		pyr.append(thisLevel)
@@ -42,9 +43,9 @@ class Pyramid:
 	#dregur spil úr bunka og setur það í trashdeck
 	#þá sést næsta spil í drawDeck
 	def drawDeckdraw(self):
-		if len(self.drawDeck) > 0:
+		if len(self.drawDeck) > 0: #ef við eigum spil eftir í drawDeck
 			self.trashDeck.append(self.drawDeck.pop())
-		elif self.difficulty > 0:
+		elif self.difficulty > 0: #ef að við meigum nota spilin aftur
 			for i in range(len(trashDeck)):
 				drawDeck.append(trashDeck.pop(-1))
 		else:
@@ -80,7 +81,8 @@ class Pyramid:
 		return True
 	  else:
 		return False
-	#upfæra "frjáls" spil
+		
+	#upfæra laus spil
 	def updateRem(self,i,j):
 		if j >= 1:
 			self.pyramid[i-1][j-1][2][1]= -1

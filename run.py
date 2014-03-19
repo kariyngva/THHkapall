@@ -19,6 +19,13 @@ def drawFromDeck():
 def setDifficulty(difficulty='easy'):
     pyramid.setDifficulty(difficulty)
 
+@route('/newgame')
+def newgame():
+    #pyramid.newgame()
+    return {'lol': 'newgame'}
+
+
+
 @route('/static/<filename>')
 def server_static(filename):
     return static_file(filename, root='./static')

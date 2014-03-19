@@ -1,6 +1,7 @@
 #coding=UTF-8
 import unittest
-from Deck import *
+#from Deck import *
+from pyramid import*
 
 class testKapallFunctions(unittest.TestCase):
     def test_Card(self):
@@ -34,6 +35,18 @@ class testKapallFunctions(unittest.TestCase):
         self.assertEqual(spil2.suit, suit)
         self.assertNotEqual(stokkur1, stokkur1.shuffle())
 
+    def test_pyramid(self):
+
+        leikur1=Pyramid(1)
+        leikur2=Pyramid(2)
+
+        self.assertTrue(leikur1)
+        self.assertNotEqual(leikur1,leikur2)
+        self.assertNotEqual(leikur1.difficulty, leikur2.difficulty)
+        self.assertTrue(leikur1.deck)
+        self.assertTrue(leikur2.pyramid)
+        self.assertFalse(leikur2.trashDeck)
+        self.assertFalse(leikur2.trashDeck)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2, exit=False)

@@ -10,13 +10,14 @@
   <title></title>
   <link href="static/m.css" rel="stylesheet" />
   <script src="static/jquery-1.11.0.min.js"></script>
+  <script src="static/jquery-ui-1.10.4.custom.min.js"></script>
 
 </head>
 <body>
 
     <div class="nav">
         <ul>
-          <li><a href="/url">New game</a></li>
+          <li><a href="/newgame">New game</a></li>
           <li><a href="/url">Reset game</a></li>
           <li><a href="/url">Undo last move</a></li>
           <li class="difficulty">
@@ -162,9 +163,9 @@
                 <span class="value">2</span>
             </div>
             <div class="card spades">
-                <span class="value">2</span>
+                <span class="value">11</span>
             </div>
-            <div class="card spades">
+            <div class="card spades free">
                 <span class="value">2</span>
             </div>
         </div>

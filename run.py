@@ -25,6 +25,20 @@ def newgame():
     return {'lol': 'newgame'}
 
 
+@route('/resetgame')
+def resetgame():
+    #pyramid.resetGame()
+    return {'lol': 'reset'}
+
+@route('/undolastmove')
+def undolastmove():
+    #pyramid.undoLastMove()
+    return {'lol': 'undo'}
+
+@route('/isfree')
+def isfree():
+    return { 'isfree': pyramid.checkFree() };
+
 
 @route('/static/<filename>')
 def server_static(filename):

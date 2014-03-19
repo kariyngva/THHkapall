@@ -4,10 +4,19 @@ var $ = jQuery,
     $bdy = $('body'),
     $html = $('html'),
     drawDeck = $('.drawdeck'),
-    trashDeck = $('.trashdeck');
+    trashDeck = $('.trashdeck'),
+
+    isFree = function ( card ) {
+        $.ajax({
+          url: '/isfree'
+        }).done(function(data) {
+            $('.difficulty a').removeClass('current');
+            link.addClass('current');
+          });
+      };
 
     //Bindum smell á stokk.
-    drawDeck.on('click', function (e) {
+    drawDeck.on('click.drawDeck', function (e) {
         var link = $('<a href="deck.html">derp</a>');
 
         //passa að láta click + drag cancela click event.
@@ -70,15 +79,20 @@ $(document).ready(function () {
 
           },
         start: function (event, ui) {
-          if( !$(this).is('.free') )
+          /*if( !$(this).is('.free') )
           {
             return false;
           }
-          cardDragged = $(this);
+          cardDragged = $(this);*/
 
           },
         stop: function (event, ui) {
           ;;;window.console&&console.log( ['stop'] );
+          //when
+            if($('.drawDeck').find('.card').length === 0){
+              ;;;window.console&&console.log( ['drawdeck empty'] );
+              $(document).trigger('drawDeck');
+            }
           }
       });
 

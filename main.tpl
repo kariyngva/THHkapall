@@ -56,7 +56,7 @@
         <div class="row r1">
 
             <div class="card hearts">
-                <span class="value">9</span>
+                <span class="value">8</span>
             </div>
 
         </div>
@@ -153,7 +153,7 @@
             <div class="card spades">
                 <span class="value">2</span>
             </div>
-            <div class="card spades">
+            <div class="card spades free">
                 <span class="value">2</span>
             </div>
             <div class="card spades">

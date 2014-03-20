@@ -1,4 +1,5 @@
 ﻿#coding=UTF-8
+from collections import deque
 from Card import *
 from Deck import *
 
@@ -7,23 +8,23 @@ class Pyramid:
 	def __init__(self, difficulty):
 		self.deck = Deck() #stokkurinn
 		self.pyramid = self.buildPyr() #hluti af stokknum verður pýramíddi
-		self.drawDeck = [] #fyrri stokkurinn af spilum
-		self.trashDeck = []	#seinni stokkurinn af spilum
-		self.discardPile = [] #spilin sem að hafa verið tekin út
+		self.drawDeck = deque() #fyrri stokkurinn af spilum
+		self.activeDeck = deque()	#seinni stokkurinn af spilum
+		self.discardPile = deque() #spilin sem að hafa verið tekin út
 		for i in range(0,len(self.deck.cards)):
 			self.drawDeck.append(self.deck.draw())
 		self.score = 0
 		self.difficulty = difficulty #því hærri tala því auðveldari er leikurinn
-		self.initPyramid = [] #state savefyrir restart same game
+		self.initPyramid = copy.deepcopy(self.pyramid) #state savefyrir restart same game
 		for i in range(len(self.pyramid)):
 			self.initPyramid.append(self.pyramid[i])
-		self.initDrawDeck = []#state savefyrir restart same game
+		self.initDrawDeck = copy.deepcopy(self.drawDeck)#state savefyrir restart same game
 		for i in range(len(self.drawDeck)):
 			self.initDrawDeck.append(self.drawDeck[i])
 		self.initDifficulty = self.difficulty
-		self.tempPyramid = []
-		self.tempDrawDeck = []
-		self.tempDiscardpile = []
+		self.tempPyramid = copy.deepcopy(self.pyramid)
+		self.tempDrawDeck = deque()
+		self.tempDiscardpile = deque()
 	
 	#byggir píramídann sjálfann sem lista af listum
 	#hvert stak í listunum inniheldur spil og hnit fyrir foreldri og börn sbr. tré
@@ -33,7 +34,7 @@ class Pyramid:
 		for i in range (0,7): #sex hæðir
 			thisLevel = []
 			for j in range (0,i+1):
-			  nxtCard = self.deck.draw() # or whatever you get the idea
+			  nxtCard = self.deck.draw() 
 			  pyrSpotSpecs = [nxtCard, self.parents(i,j), self.children(i,j)] #hver eind
 			  thisLevel.append(pyrSpotSpecs)
 
@@ -41,36 +42,39 @@ class Pyramid:
 		return pyr
 	
 	def saveState(self):
-		self.tempPyramid = list(self.pyramid)
-		self.tempDrawDeck = list(self.drawDeck)
-		self.tempDiscardpile = list(self.discardPile)
-		self.tempTrashDeck = list(self.trashDeck)
+		self.tempPyramid = copy.deepcopy(self.pyramid)
+		self.tempDrawDeck = copy.deepcopy(self.drawDeck)
+		self.tempDiscardpile = copy.deepcopy(self.discardPile)
+		self.tempActiveDeck = copy.deepcopy(self.activeDeck)
 		self.tempDifficulty = self.difficulty
 		
 	def returnToInit(self):
-		self.pyramid = list(self.initPyramid)
-		self.drawDeck = list(self.initDrawDeck)
-		self.trashDeck = []
+		self.pyramid = copy.deepcopy(self.initPyramid)
+		self.drawDeck = copy.deepcopy(self.initDrawDeck)
+		self.activeDeck = deque()
 		self.difficulty = self.initDifficulty
-		self.discardPile = []
+		self.discardPile = deque()
 		
 	def Undo(self):
-		self.pyramid = list(self.tempPyramid)
-		self.drawDeck = list(self.tempDrawDeck)
-		self.discardPile = list(self.tempDiscardpile)
-		self.trashDeck = list(self.tempTrashDeck)
+		self.pyramid = copy.deepcopy(self.tempPyramid)
+		self.drawDeck = copy.deepcopy(self.tempDrawDeck)
+		self.discardPile = copy.deepcopy(self.tempDiscardpile)
+		self.activeDeck = copy.deepcopy(self.tempActiveDeck)
 		self.difficulty = self.tempDifficulty
 		
-	#dregur spil úr bunka og setur það í trashdeck
+	#dregur spil úr bunka og setur það í activeDeck
 	#þá sést næsta spil í drawDeck
 	def drawDeckdraw(self):
-		#self.saveState()
+		self.saveState()
 		if len(self.drawDeck) > 0: #ef við eigum spil eftir í drawDeck
-			self.trashDeck.append(self.drawDeck.pop(-1))
+			self.activeDeck.append(self.drawDeck.pop())
 		elif self.difficulty > 0: #ef að við meigum nota spilin aftur
-			for i in range(len(trashDeck)):
-				drawDeck.append(trashDeck.pop())
-				difficulty = difficulty -1
+			self.drawDeck = copy.deepcopy(self.activeDeck.reverse())
+			self.activeDeck= deque()
+			drawDeckdraw()
+			#for i in range(len(activeDeck)):
+			#	drawDeck.append(self.activeDeck.pop())
+			self.difficulty = self.difficulty -1
 		else:
 			return -1
 			
@@ -114,7 +118,7 @@ class Pyramid:
 	def pyramidToPyramid(self, i1, j1, i2, j2):
 		if self.checkFree(i2, j2):
 			if self.pyramid[i1][j1][0].value + self.pyramid[i2][j2][0].value == 13:
-				#self.saveState()
+				self.saveState()
 				self.updateRem(i1, j1)
 				self.updateRem(i2, j2)
 				self.discardPile.append(self.pyramid[i1][j1][0])
@@ -127,16 +131,13 @@ class Pyramid:
 	# athugar spil sem tekið er af öðrum hvorum stokknum og sleppt á píramídda
 	#fromDraw er boolean gildi sem að er rétt þegar spilið kemur úr drawDeck
 	# i og j eru hnit af spilinu sem verið er að sleppa á, card er spilið úr stokknum
-	def deckToPyramid(self, fromDraw, card, i, j):
+	def deckToPyramid(self, card, i, j):
 		if self.checkFree(i, j):
 			if card.value + self.pyramid[i][j][0].value == 13:
-				#self.saveState()
+				self.saveState()
 				self.updateRem(i, j)
 				self.discardPile.append(self.pyramid[i][j][0])
-				if fromDraw:
-					self.discardPile.append(drawDeck.pop)
-				else:
-					self.discardPile.append(trashDeck.pop)
+				self.discardPile.append(activeDeck.pop())
 				self.score += 200
 				return True
 			return False

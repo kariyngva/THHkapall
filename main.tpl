@@ -36,8 +36,8 @@
 
 <div class="decks">
     <div class="drawdeck">
-        <div class="card hearts">
-            <span class="value">5</span>
+        <div class="card {{ drawDeck.suit }}">
+            <span class="value">{{ drawDeck.value }}</span>
         </div>
     </div>
 
@@ -53,7 +53,21 @@
 
     <div class="pyramid">
 
-        <div class="row r1">
+        %for i in range (0,7):
+            <div class="row r{{ i }}">
+            %for j in range ( 0, i + 1 ):
+                %card = pyramid[i][j][0]
+                <div class="card {{ card.suit }}">
+                    <span class="value">{{ card.value }}</span>
+                    <span class="rank">{{ card.rank }}</span>
+                    <span class="index i">{{ i }}</span>
+                    <span class="index j">{{ j }}</span>
+                </div>
+            %end
+
+            </div>
+        %end
+        <!--div class="row r1">
 
             <div class="card hearts">
                 <span class="value">8</span>
@@ -168,7 +182,7 @@
             <div class="card spades free">
                 <span class="value">2</span>
             </div>
-        </div>
+        </div-->
     </div>
 
 <script src="static/m.js"></script>

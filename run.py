@@ -2,18 +2,20 @@
 from bottle import route, run, template, post, request, static_file
 from pyramid import *
 
-#pyramid = new pyramid()
+pyramid = Pyramid(3)
 
 @route('/')
 def index():
-    return template( 'main' )
+    topOfDrawDeck = pyramid.drawDeck[0]
+
+    return template( 'main', drawDeck = topOfDrawDeck, pyramid = pyramid.pyramid )
 
 @route('/drawFromDeck')
 def drawFromDeck():
-    ##card = game.drawFromdeck()
-    #check if we have cards left in the drawdeck
-    return {'suit': 'diamonds', 'rank': 'king', 'lastcard': False}
+    lastCard = pyramid.drawDeckdraw();
+    card = pyramid.drawDeck[0]
 
+    return {'suit': card.suit, 'rank': card.rank, 'lastcard': lastCard}
 
 @route('/setDifficulty/:difficulty')
 def setDifficulty(difficulty='easy'):
@@ -35,9 +37,9 @@ def undolastmove():
     #pyramid.undoLastMove()
     return {'lol': 'undo'}
 
-@route('/isfree')
-def isfree():
-    return { 'isfree': pyramid.checkFree() };
+@route('/isfree/:i/:j')
+def isfree(i,j):
+    return { 'isfree': pyramid.checkFree( int( i ), int( j )) };
 
 
 @route('/static/<filename>')

@@ -37,6 +37,10 @@ body {
 .trashdeck {
     float: left;
 }
+.king .value,
+.queen .value,
+.jack .value,
+.index { position:absolute;right:9999px;left:auto; }
 /** ** card styls ** **/
 .card {
     width: 100px;

@@ -36,13 +36,23 @@
 
 <div class="decks">
     <div class="drawdeck">
-        <div class="card {{ drawDeck.suit }}">
+        <div class="card free {{ drawDeck.suit }}">
             <span class="value">{{ drawDeck.value }}</span>
+            <span class="value">{{ drawDeck.rank }}</span>
+            <span class="index i">0</span>
+            <span class="index j">0</span>
         </div>
     </div>
 
     <div class="trashdeck">
-
+        %if len( activeDeck ) > 0:
+            <div class="card free {{ activeDeck[-1].suit }}">
+                <span class="value">{{ activeDeck[-1].value }}</span>
+                <span class="rank">{{ activeDeck[-1].rank }}</span>
+                <span class="index i">0</span>
+                <span class="index j">0</span>
+            </div>
+        %end
     </div>
 </div>
 
@@ -67,122 +77,7 @@
 
             </div>
         %end
-        <!--div class="row r1">
 
-            <div class="card hearts">
-                <span class="value">8</span>
-            </div>
-
-        </div>
-
-        <div class="row r2">
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card diamond">
-                <span class="value">3</span>
-            </div>
-        </div>
-
-        <div class="row r3">
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-        </div>
-
-        <div class="row r4">
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-        </div>
-
-        <div class="row r5">
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-        </div>
-
-        <div class="row r6">
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-        </div>
-
-        <div class="row r7">
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades free">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades">
-                <span class="value">2</span>
-            </div>
-            <div class="card spades">
-                <span class="value">11</span>
-            </div>
-            <div class="card spades free">
-                <span class="value">2</span>
-            </div>
-        </div-->
     </div>
 
 <script src="static/m.js"></script>

@@ -47,6 +47,8 @@ body {
     height: 150px;
     border: 1px solid red;
     display: inline-block;
+    opacity: 1;
+    filter: alpha(opacity=1);
 }
 
 .hearts {
@@ -65,8 +67,14 @@ body {
     background: url(i/l1.png) 0 0 no-repeat;
 }
 
-.diamond {
+.diamonds {
     background: url(i/t1.png) 0 0 no-repeat;
+}
+.gone {
+    -webkit-transition: all 1.0s ease-in-out;
+    transition:         all 1.0s ease-in-out;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
 
 .row {

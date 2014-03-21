@@ -9,7 +9,7 @@ class Pyramid:
 	def __init__(self, difficulty):
 		self.deck = Deck() #stokkurinn
 		self.pyramid = self.buildPyr() #hluti af stokknum verður pýramíddi
-		self.drawDeck = deque([]) #fyrri stokkurinn af spilum
+		self.drawDeck = deque() #fyrri stokkurinn af spilum
 		self.activeDeck = deque()	#seinni stokkurinn af spilum
 		self.discardPile = deque() #spilin sem að hafa verið tekin út
 		for i in range(0,len(self.deck.cards)):
@@ -67,18 +67,21 @@ class Pyramid:
 	#þá sést næsta spil í drawDeck
 	def drawDeckdraw(self):
 		self.saveState()
-		if len(self.drawDeck) > 0: #ef við eigum spil eftir í drawDeck
+		if len(self.drawDeck) > 1: #ef við eigum spil eftir í drawDeck
 			self.activeDeck.append(self.drawDeck.popleft())
+			print len(self.drawDeck)
 		elif self.difficulty > 0: #ef að við meigum nota spilin aftur
-			print 'restock'
-			self.drawDeck = copy.deepcopy(self.activeDeck.reverse())
-			self.activeDeck = deque()
-			drawDeckdraw()
+			#self.drawDeck = deque()
+			self.activeDeck.reverse()
+			self.drawDeck = copy.deepcopy(self.activeDeck)
+			self.activeDeck= deque()
+			self.drawDeckdraw()
 			#for i in range(len(activeDeck)):
 			#	drawDeck.append(self.activeDeck.pop())
 			self.difficulty = self.difficulty -1
 		else:
 			return -1
+
 
 
 	#hnit foreldra: -1 er enginn
@@ -132,14 +135,48 @@ class Pyramid:
 	# athugar spil sem tekið er af öðrum hvorum stokknum og sleppt á píramídda
 	#fromDraw er boolean gildi sem að er rétt þegar spilið kemur úr drawDeck
 	# i og j eru hnit af spilinu sem verið er að sleppa á, card er spilið úr stokknum
-	def deckToPyramid(self, card, i, j):
+	def deckToPyramid(self, card, fromDraw, i, j):
 		if self.checkFree(i, j):
 			if card.value + self.pyramid[i][j][0].value == 13:
 				self.saveState()
 				self.updateRem(i, j)
 				self.discardPile.append(self.pyramid[i][j][0])
-				self.discardPile.append(activeDeck.pop())
+				if fromDraw:
+					self.discardPile.append(self.drawDeck.popleft())
+				else:
+					self.discardPile.append(self.activeDeck.popleft())
 				self.score += 200
 				return True
 			return False
+		return False
+
+	def deckToDeck(self, drawCard, activeCard):
+		if drawCard.value + activeCard.value == 13:
+			self.saveState()
+			self.discardPile.append(drawDeck.pop())
+			self.discardPile.append(activeDeck.pop())
+			self.score += 200
+			return True
+		return False
+
+	def checkKingPyr(self, i, j):
+		if self.pyramid[i][j][0].value == 13:
+			if self.checkFree(i,j):
+				self.saveState()
+				self.discardPile.append(self.pyramid[i][j][0])
+				self.updateRem(i,j)
+				self.score += 100
+				return True
+			return False
+		return False
+
+	def checkKingDeck(self, fromDraw, card):
+		if card.value == 13:
+			self.saveState()
+			if fromDraw:
+				self.discardPile.append(drawDeck.pop())
+			else:
+				self.discardPile.append(activeDeck.pop())
+			self.score += 100
+			return True
 		return False

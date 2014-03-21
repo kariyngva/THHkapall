@@ -7,8 +7,11 @@ pyramid = Pyramid(3)
 @route('/')
 def index():
     topOfDrawDeck = pyramid.drawDeck[0]
+    #topOfActiveDeck = pyramid.activeDeck
 
-    return template( 'main', drawDeck = topOfDrawDeck, pyramid = pyramid.pyramid )
+    #þarf að tékka hvort að activedeck sé með len()>0 og setja þá inn
+
+    return template( 'main', drawDeck = topOfDrawDeck, activeDeck = pyramid.activeDeck, pyramid = pyramid.pyramid )
 
 @route('/drawFromDeck')
 def drawFromDeck():
@@ -40,6 +43,23 @@ def undolastmove():
 @route('/isfree/:i/:j')
 def isfree(i,j):
     return { 'isfree': pyramid.checkFree( int( i ), int( j )) };
+
+
+@route('/pyramidToPyramid/:i/:j/:k/:l')
+def pyramidToPyramid(i, j, k, l):
+    return {
+        'success': pyramid.pyramidToPyramid( int( i ), int( j ), int( k ), int( l ) )
+        };
+
+@route('/deckToPyramid/:fromDraw/:i/:j')
+def deckToPyramid( fromDraw, i, j):
+    #"0" if int(inflateMstart) < 10 else ""
+    card = pyramid.drawDeck[0] if bool( fromDraw ) == True else pyramid.activeDeck[-1]
+
+    return {
+        'success': pyramid.deckToPyramid( card, bool( fromDraw ), int( i ), int( j ) )
+        };
+
 
 
 @route('/static/<filename>')

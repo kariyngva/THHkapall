@@ -5,7 +5,6 @@ var $ = jQuery,
     $html = $('html'),
     drawDeck = $('.drawdeck'),
     trashDeck = $('.trashdeck'),
-
     isFree = function ( i, j ) {
       var result = false;
         $.ajax({
@@ -14,7 +13,30 @@ var $ = jQuery,
           dataType: 'json'
         }).done(function(data) {
             result = data.isfree;
-
+          });
+        return result;
+      },
+    pyramidToPyramid = function ( i, j, k, l ) {
+      var result = false;
+        $.ajax({
+          url: '/pyramidToPyramid/' + i + '/' + j + '/' + k + '/' + l,
+          async: false,
+          dataType: 'json'
+        }).done(function(data) {
+            result = data.success;
+          });
+        return result;
+      },
+    deckToPyramid = function ( fromDraw, i, j ) {
+      var result = false;
+        $.ajax({
+          url: '/deckToPyramid/' + fromDraw + '/' + i + '/' + j,
+          async: false,
+          dataType: 'json'
+        }).done(function(data) {
+            result = data.success;
+            ;;;window.console&&console.log( [result] );
+            ;;;window.console&&console.log( [fromDraw + '/' + i + '/' + j] );
           });
         return result;
       };
@@ -23,7 +45,7 @@ var $ = jQuery,
     //Bindum smell á stokk.
     drawDeck.on('click.drawDeck', function (e) {
         var link = $('<a href="deck.html">derp</a>');
-
+        ;;;window.console&&console.log( ['boom'] );
         //passa að láta click + drag cancela click event.
         //e.preventDefault();
 
@@ -36,7 +58,7 @@ var $ = jQuery,
                 newTrashCard = drawDeck.find('.card');
                 trashDeck.empty();
                 trashDeck.prepend(newTrashCard);
-                card = $('<div class="card ' + data.suit + '"><span class="value">' + data.rank + '</span></div>');
+                card = $('<div class="card free ' + data.suit + '"><span class="value">' + data.rank + '</span></div>');
 
                 //Get a new card from the drawDeck deck
                 if(data.rank === "king")
@@ -86,29 +108,24 @@ $(document).ready(function () {
         start: function (event, ui) {
           var card = $(this),
               cardIndex = {
-                  i: parseInt( card.find('.i').text(), 10 ),
-                  j: parseInt( card.find('.j').text(), 10 )
+                  i: parseInt( card.find('.i').text(), 10 ) || 0,
+                  j: parseInt( card.find('.j').text(), 10 ) || 0
                 },
-              canMoveCard = isFree( cardIndex.i, cardIndex.j )
+              canMoveCard = card.parents('.pyramid').length ? isFree( cardIndex.i, cardIndex.j ) : true;
 
           //Stop a card from being dragged if it's not free
           //Should always be at the bottom so we don't prematurly return
-          ;;;window.console&&console.log( [isFree( cardIndex.i, cardIndex.j )] );
-          if( !isFree( cardIndex.i, cardIndex.j ) )
+          ;;;window.console&&console.log( [canMoveCard] );
+          if( !canMoveCard  )
           {
             return false;
           }
-          /*if( !$(this).is('.free') )
-          {
-            return false;
-          }
-          cardDragged = $(this);*/
+
+          cardDragged = card;
           },
 
         stop: function (event, ui) {
-          ;;;window.console&&console.log( ['stop'] );
-          //when
-            if($('.drawDeck').find('.card').length === 0){
+            if($('.drawdeck').find('.card').length === 0){
               ;;;window.console&&console.log( ['drawdeck empty'] );
               drawDeck.trigger('click');
             }
@@ -131,12 +148,32 @@ $(document).ready(function () {
           return true;
           },
         drop: function (event, ui) {
-            ;;;window.console&&console.log( ['drop'] );
+
             $(this).css("border-color", "lightgreen")
-            isFree()
-            //check
-            cardDroppedOn = $(this);
-            ;;;window.console&&console.log( [$(this)] );
+            cardDroppedOn = $(this),
+            cIndex = { //indexes of cards in the pyramid.
+              i: parseInt(cardDragged.find('.i').text(), 10 ),
+              j: parseInt(cardDragged.find('.j').text(), 10 ),
+              k: parseInt(cardDroppedOn.find('.i').text(), 10 ),
+              l: parseInt(cardDroppedOn.find('.j').text(), 10 )
+            };
+
+            if( cardDragged.parents('.pyramid').length && pyramidToPyramid(cIndex.i, cIndex.j, cIndex.k, cIndex.l) )
+            {
+              //do magic
+              //ajax kall á increase score (gui)
+              //Sækjum nýtt spil úr discard pile og fake-um move í discardhrúguna
+              //cleanup
+
+              cardDroppedOn.addClass('gone');
+              cardDragged.addClass('gone');
+            }
+            else if( cardDroppedOn.parents('.pyramid').length && deckToPyramid( cardDragged.parents('.drawdeck').length , cIndex.k, cIndex.l ) )
+            {
+              ;;;window.console&&console.log( ['mm'] );
+              cardDroppedOn.addClass('gone');
+              cardDragged.addClass('gone');
+            }
 
         },
         over: function (event, ui) {
@@ -147,31 +184,6 @@ $(document).ready(function () {
             ;;;window.console&&console.log( ['out'] );
         }
       });
-    /*$(".card").draggable({
-        axis: "x, y",
-        containment: "parent"
-        drag: function (ev, ui) {
-            var xPos, $elem,
-            deltaX = ui.position.left - ui.originalPosition.left;
-            for (var i in $elements) {
-                $elem = $elements[i];
-                if ($elem[0] != this) {
-                    $elem.offset({
-                        top: $elem.data('dragStart').top,
-                        left: Math.max($elem.data('dragStart').left + deltaX, 8)
-                    });
-                }
-            }
-        }
-    });*/
-    /*$(".Event").resizable({
-        //containment: "parent",
-        handles: 'e, w'
-    });
-    $(".Resource").resizable({
-        //containment: "parent",
-        handles: 'e, w'
-    });*/
 });
 
 

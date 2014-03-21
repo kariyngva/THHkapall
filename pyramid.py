@@ -67,11 +67,14 @@ class Pyramid:
 	def drawDeckdraw(self):
 		self.saveState()
 		if len(self.drawDeck) > 0: #ef við eigum spil eftir í drawDeck
-			self.activeDeck.append(self.drawDeck.pop())
+			self.activeDeck.append(self.drawDeck.popleft())
+			print len(self.drawDeck)
 		elif self.difficulty > 0: #ef að við meigum nota spilin aftur
-			self.drawDeck = copy.deepcopy(self.activeDeck.reverse())
+			#self.drawDeck = deque()
+			self.activeDeck.reverse()
+			self.drawDeck = copy.deepcopy(self.activeDeck)
 			self.activeDeck= deque()
-			drawDeckdraw()
+			#self.drawDeckdraw()
 			#for i in range(len(activeDeck)):
 			#	drawDeck.append(self.activeDeck.pop())
 			self.difficulty = self.difficulty -1
@@ -131,15 +134,48 @@ class Pyramid:
 	# athugar spil sem tekið er af öðrum hvorum stokknum og sleppt á píramídda
 	#fromDraw er boolean gildi sem að er rétt þegar spilið kemur úr drawDeck
 	# i og j eru hnit af spilinu sem verið er að sleppa á, card er spilið úr stokknum
-	def deckToPyramid(self, card, i, j):
+	def deckToPyramid(self, card, fromDraw i, j):
 		if self.checkFree(i, j):
 			if card.value + self.pyramid[i][j][0].value == 13:
 				self.saveState()
 				self.updateRem(i, j)
 				self.discardPile.append(self.pyramid[i][j][0])
-				self.discardPile.append(activeDeck.pop())
+				if fromDraw:
+					self.discardPile.append(self.drawDeck.popleft())
+				else:
+					self.discardPile.append(self.activeDeck.popleft())
 				self.score += 200
 				return True
 			return False
 		return False
 		
+	def deckToDeck(self, drawCard, activeCard):
+		if drawCard.value + activeCard.value == 13:
+			self.saveState()
+			self.discardPile.append(drawDeck.pop())
+			self.discardPile.append(activeDeck.pop())
+			self.score += 200
+			return True
+		return False
+	
+	def checkKingPyr(self, i, j):
+		if self.pyramid[i][j][0].value == 13:
+			if self.checkFree(i,j):
+				self.saveState()
+				self.discardPile.append(self.pyramid[i][j][0])
+				self.updateRem(i,j)
+				self.score += 100
+				return True
+			return False      
+		return False
+	
+	def checkKingDeck(self, fromDraw, card):
+		if card.value == 13:
+			self.saveState()
+			if fromDraw:
+				self.discardPile.append(drawDeck.pop())
+			else:
+				self.discardPile.append(activeDeck.pop())
+			self.score += 100
+			return True      
+		return False

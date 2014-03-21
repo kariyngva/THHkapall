@@ -1,7 +1,7 @@
+#coding=UTF-8
 from datetime import datetime
 import csv
 import operator
-#coding=UTF-8
 # fall sem returnar top 10 highscores
 def top10_highscores():
     try:
@@ -21,8 +21,8 @@ def input_score(score,name):
     f = open("highscore.txt",'a')
     f.write(str(score)+'\t'+str(name)+'\t'+str(datetime.now())+'\n') #skrifum score, nafn og timasetningu i highscore.txt
     f.close()
+#dæmi
+#input_score(99999,"tms")
 
-input_score(99999,"tms")
-
-topscore=top10_highscores()
-print topscore
+#topscore=top10_highscores()
+#print topscore

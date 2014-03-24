@@ -6,17 +6,15 @@ pyramid = Pyramid(3)
 
 @route('/')
 def index():
-    topOfDrawDeck = pyramid.drawDeck[0]
+    topOfDrawDeck = pyramid.drawDeckTop()
     #topOfActiveDeck = pyramid.activeDeck
-
-    #þarf að tékka hvort að activedeck sé með len()>0 og setja þá inn
 
     return template( 'main', drawDeck = topOfDrawDeck, activeDeck = pyramid.activeDeck, pyramid = pyramid.pyramid )
 
 @route('/drawFromDeck')
 def drawFromDeck():
     lastCard = pyramid.drawDeckdraw();
-    card = pyramid.drawDeck[0]
+    card = pyramid.drawDeckTop()
 
     return {'suit': card.suit, 'rank': card.rank, 'lastcard': lastCard}
 
@@ -60,12 +58,11 @@ def deckToPyramid( fromDraw, i, j):
 
 @route('/deckToDeck')
 def deckToDeck():
-    #Svo activeCard breytin okkar hérna f. neðan valdi ekki villu.
-    if len( pyramid.activeDeck ) == 0:
-        return { 'success': False };
+    drawCard = pyramid.drawDeckTop()
+    activeCard = pyramid.activeDeckTop
 
-    drawCard = pyramid.drawDeck[0];
-    activeCard = pyramid.activeDeck[-1];
+    if drawCard is False or activeCard is False:
+        return { 'success': False };
 
     return { 'success': pyramid.deckToDeck( drawCard, activeCard ) };
 

@@ -181,14 +181,14 @@ class Pyramid:
 			return True
 		return False
 
-    def drawDeckTop(self):
-        if len(self.drawDeck) > 0:
-            return self.drawDeck[0]
-        else:
-            return False
+	def drawDeckTop(self):
+		if len(self.drawDeck) > 0:
+		    return self.drawDeck[0]
+		else:
+		    return False
 
-    def activeDeckTop(self):
-        if len(self.activeDeckTop) > 0:
-            return self.activeDeckTop[-1]
-        else:
-            return False
+	def activeDeckTop(self):
+	    if len(self.activeDeckTop) > 0:
+	        return self.activeDeckTop[-1]
+	    else:
+	        return False

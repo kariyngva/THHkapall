@@ -37,8 +37,7 @@ def resetgame():
 
 @route('/undolastmove')
 def undolastmove():
-    #pyramid.undoLastMove()
-    return {'lol': 'undo'}
+    pyramid.Undo()
 
 @route('/isfree/:i/:j')
 def isfree(i,j):
@@ -53,14 +52,22 @@ def pyramidToPyramid(i, j, k, l):
 
 @route('/deckToPyramid/:fromDraw/:i/:j')
 def deckToPyramid( fromDraw, i, j):
-    #"0" if int(inflateMstart) < 10 else ""
     card = pyramid.drawDeck[0] if bool( fromDraw ) == True else pyramid.activeDeck[-1]
 
     return {
         'success': pyramid.deckToPyramid( card, bool( fromDraw ), int( i ), int( j ) )
         };
 
+@route('/deckToDeck')
+def deckToDeck():
+    #Svo activeCard breytin okkar hérna f. neðan valdi ekki villu.
+    if len( pyramid.activeDeck ) == 0:
+        return { 'success': False };
 
+    drawCard = pyramid.drawDeck[0];
+    activeCard = pyramid.activeDeck[-1];
+
+    return { 'success': pyramid.deckToDeck( drawCard, activeCard ) };
 
 @route('/static/<filename>')
 def server_static(filename):
@@ -70,4 +77,4 @@ def server_static(filename):
 def callback(path):
     return static_file(path, root='./static')
 
-run(host='localhost', port=8080)
+run(reloader=True, host='localhost', port=8080)

@@ -153,8 +153,8 @@ class Pyramid:
 	def deckToDeck(self, drawCard, activeCard):
 		if drawCard.value + activeCard.value == 13:
 			self.saveState()
-			self.discardPile.append(drawDeck.pop())
-			self.discardPile.append(activeDeck.pop())
+			self.discardPile.append(self.drawDeck.pop())
+			self.discardPile.append(self.activeDeck.pop())
 			self.score += 200
 			return True
 		return False
@@ -180,3 +180,15 @@ class Pyramid:
 			self.score += 100
 			return True
 		return False
+
+    def drawDeckTop(self):
+        if len(self.drawDeck) > 0:
+            return self.drawDeck[0]
+        else:
+            return False
+
+    def activeDeckTop(self):
+        if len(self.activeDeckTop) > 0:
+            return self.activeDeckTop[-1]
+        else:
+            return False

@@ -15,6 +15,7 @@ var $ = jQuery,
             //snap: true,
             drag: function () {},
             start: function (event, ui) {
+              ;;;window.console&&console.log( ['start'] );
                 var card = $(this),
                     cardIndex = {
                         i: parseInt( card.find('.i').text(), 10 ) || 0,
@@ -37,14 +38,15 @@ var $ = jQuery,
                   drawDeck.trigger('click');
                 }
             }
-          })
+          });
+        cards
           .droppable({
             scope:'card',
             tolerance: 'touch',
             revert: 'invalid',
             accept: function (elm) {
-                var val1 = parseInt( elm.find('.value').text(), 10 ),
-                    val2 = parseInt( $(this).find('.value').text(), 10 );
+                var val1 = parseInt( elm.find('.value').eq(0).text(), 10 ),
+                    val2 = parseInt( $(this).find('.value').eq(0).text(), 10 );
 
                 //Ætlum ekki að accepta drop ef spilin eru ekki með 13 sem samanlagt gildi
                 if( (val1 + val2) != 13 )
@@ -55,9 +57,6 @@ var $ = jQuery,
                 return true;
             },
             drop: function (event, ui) {
-
-                $(this).css("border-color", "lightgreen")
-
                 cardDroppedOn = $(this);
 
                 //indexes of cards in the pyramid.
@@ -86,10 +85,10 @@ var $ = jQuery,
 
             },
             over: function (event, ui) {
-                $(this).css("border-color", "blue")
+
             },
             out: function (event, ui) {
-                $(this).css("border-color", "pink")
+                $(this).css("border-color", "pink");
             }
           });
       },
@@ -149,9 +148,11 @@ var $ = jQuery,
                 newTrashCard = drawDeck.find('.card');
                 trashDeck.empty();
                 trashDeck.prepend(newTrashCard);
-                card = $('<div class="card free ' + data.suit + '"><span class="value">' + data.rank + '</span></div>');
+                card = $('<div class="card free ' + data.suit + '"><span class="value v1">' + data.val + '</span><span class="value v2">' + data.val + '</span></div>');
 
-                //Get a new card from the drawDeck deck
+                //Gerum spilið drag/droppable
+                initDragDrop(card);
+
                 if(data.rank === "king")
                 {
                   card.addClass('king');
@@ -181,7 +182,7 @@ var $ = jQuery,
       });
 
     //Initum öll spilin sem draggable og droppable sem eru í dominu.
-    initDragDrop($('.card'));
+    initDragDrop( $('.card') );
 
 /*$(document).ready(function () {
 

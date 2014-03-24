@@ -16,7 +16,7 @@ def drawFromDeck():
     lastCard = pyramid.drawDeckdraw();
     card = pyramid.drawDeckTop()
 
-    return {'suit': card.suit, 'rank': card.rank, 'lastcard': lastCard}
+    return { 'suit': card.suit, 'rank': card.rank, 'val': card.value, 'lastcard': lastCard }
 
 @route('/setDifficulty/:difficulty')
 def setDifficulty(difficulty='easy'):

@@ -43,18 +43,38 @@ body {
 .queen .value,
 .jack .value,
 .index { position:absolute;right:9999px;left:auto; }
+
 /** ** card styls ** **/
 .card {
     width: 100px;
     height: 150px;
-    border: 1px solid red;
+    border: 1px solid rgba(0,0,0, .2);
+    border-radius: 7px;
     display: inline-block;
     opacity: 1;
     filter: alpha(opacity=1);
+    position: relative;
+}
+.value {
+    position: absolute;
+    top: 2px;
+    left: 1px;
+    width: 20px;
+    text-align: center;
+}
+.v2 {
+    top: auto;
+    left: auto;
+    bottom: 4px;
+    right: -2px;
+}
+.card .rank { display: none; }
+.ui-draggable-dragging {
+    z-index: 10;
 }
 
 .hearts {
-    background: url(i/h1.png) 0 0 no-repeat;
+    background: url(i/hearts.svg) 0 0 no-repeat;
 }
 .spades .king {
     background: url(i/kingof-spades.png) 0 0 no-repeat;
@@ -62,15 +82,15 @@ body {
 .king .value { position:absolute;right:9999px;left:auto; }
 
 .spades {
-    background: url(i/s1.png) 0 0 no-repeat;
+    background: url(i/spades.svg) 0 0 no-repeat;
 }
 
 .clubs {
-    background: url(i/l1.png) 0 0 no-repeat;
+    background: url(i/clubs.svg) 0 0 no-repeat;
 }
 
 .diamonds {
-    background: url(i/t1.png) 0 0 no-repeat;
+    background: url(i/diamonds.svg) 0 0 no-repeat;
 }
 .gone {
     -webkit-transition: all 1.0s ease-in-out;

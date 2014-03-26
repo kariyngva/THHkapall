@@ -123,7 +123,7 @@ class Pyramid:
 			self.pyramid[i-1][j-1][2][1]= -1
 		if j!=i:
 			self.pyramid[i-1][j][2][0]= -1
-		self.pyramid[i][j][4] = False
+		self.pyramid[i][j][3] = False
 
 	# athugar spil dregið frá píramídda á annað spil í píramídda
 	#i1 og j1 er hnit fyrir spilið sem er verið að draga

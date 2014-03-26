@@ -16,7 +16,6 @@ var $ = jQuery,
             //snap: true,
             drag: function () {},
             start: function (event, ui) {
-              ;;;window.console&&console.log( ['start'] );
                 var card = $(this),
                     cardIndex = {
                         i: parseInt( card.find('.i').text(), 10 ) || 0,
@@ -35,8 +34,7 @@ var $ = jQuery,
             },
             stop: function (event, ui) {
                 if($('.drawdeck').find('.card').length === 0){
-                  ;;;window.console&&console.log( ['drawdeck empty'] );
-                  //drawDeck.trigger('click');
+                  //Not sure if we should do anything here
                 }
             }
           });
@@ -74,11 +72,6 @@ var $ = jQuery,
                 if( cardDragged.parents('.pyramid').length &&
                     pyramidToPyramid(cIndex.i, cIndex.j, cIndex.k, cIndex.l) )
                 {
-                  //do magic
-                  //ajax kall á increase score (gui)
-                  //Sækjum nýtt spil úr discard pile og fake-um move í discardhrúguna
-                  //cleanup
-
                   cardDroppedOn.addClass('gone');
                   cardDragged.addClass('gone');
                 }
@@ -91,11 +84,10 @@ var $ = jQuery,
                 }
                 else if ( isDeckToDeck && deckToDeck() )
                 {
-                  ;;;window.console&&console.log( ['bled'] );
                   cardDragged.addClass('gone');
                   cardDroppedOn.addClass('gone');
 
-                  //búa til fall sem checkar á trashdeck og bætir við efsta spilinu ef eitthvað
+                  //TODO:búa til fall sem checkar á trashdeck og bætir við efsta spilinu ef eitthvað
                   drawFromMainDeck();
                 }
 
@@ -112,15 +104,11 @@ var $ = jQuery,
       },
 
     updateScore = function () {
-      //var result = 0;
         $.ajax({
           url: '/updatescore',
-          //async: false,
           dataType: 'json'
         }).done(function(data) {
-            //result = data.score;
             score.text(data.score);
-            ;;;window.console&&console.log( data.score );
           });
     },
 
@@ -150,9 +138,7 @@ var $ = jQuery,
 
           if( drawDeck.find('.card').length )
           {
-            ;;;window.console&&console.log( 'me derp' );
             trashDeck.empty();
-            //trashDeck.find('.card').replaceWith( newTrashCard);
             trashDeck.prepend( newTrashCard );
           }
 
@@ -218,7 +204,6 @@ var $ = jQuery,
           dataType: 'json'
         }).done(function(data) {
             result = data.success;
-            ;;;window.console&&console.log( ['raw'] );
           });
         return result;
     },
@@ -231,10 +216,7 @@ var $ = jQuery,
           dataType: 'json'
         }).done(function(data) {
             result = data.success;
-            ;;;window.console&&console.log( drawDeck.find('.card').length );
-            card.delay(1000).remove();
-            ;;;window.console&&console.log( drawDeck.find('.card').length );
-            //TODO:Sækja nýtt spil í drawdeck
+            card.remove();
           });
         return result;
       };
@@ -242,51 +224,7 @@ var $ = jQuery,
 
     //Bindum smell á stokk.
     drawDeck.on('click.drawDeck', function (e) {
-
         drawFromMainDeck();
-        ;;;window.console&&console.log( ['boom'] );
-        //passa að láta click + drag cancela click event.
-        //e.preventDefault();
-        //card fær false ef mainDeck er tómur annars spilið sem er efst í stokknum
-
-        /*$html.addClass('ajax-wait');
-        $.get('http://localhost:8080/drawFromMainDeck')
-          .done(function(data) {
-              if(data.lastcard != -1)
-              {
-                //Overwrite the card in the trashdeck
-                newTrashCard = drawDeck.find('.card');
-                trashDeck.empty();
-                trashDeck.prepend(newTrashCard);
-                card = $('<div class="card free ' + data.suit + '"><span class="value v1">' + data.val + '</span><span class="value v2">' + data.val + '</span></div>');
-
-                //Gerum spilið drag/droppable
-                initDragDrop(card);
-
-                if(data.rank === "king")
-                {
-                  card.addClass('king');
-                }
-                else if(data.rank === "queen")
-                {
-                  card.addClass('queen');
-                }
-                else if(data.rank === "jack")
-                {
-                  card.addClass('jack');
-                }
-
-                //Bætum spilinu í drawdeck
-                drawDeck.prepend(card);
-              }
-              else
-              {
-                ;;;window.console&&console.log( ['bled'] );
-              }
-            })
-          .always(function() {
-              $html.removeClass('ajax-wait');
-            });*/
     });
 
     //Höndlum smell á erfileikatakka

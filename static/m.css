@@ -54,6 +54,10 @@ body {
     filter: alpha(opacity=1);
     position: relative;
 }
+.card.hidden {
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
 
 .value {
     position: absolute;

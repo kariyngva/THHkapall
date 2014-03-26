@@ -68,7 +68,11 @@
             <div class="row r{{ i }}">
             %for j in range ( 0, i + 1 ):
                 %card = pyramid[i][j][0]
-                <div class="card {{ card.suit }}">
+                %if card.value > 10:
+                    <div class="card {{ card.suit }} {{ card.rank }}">
+                %else:
+                    <div class="card {{ card.suit }}">
+                %end
                     <span class="value v1">{{ card.value }}</span>
                     <span class="value v2">{{ card.value }}</span>
                     <span class="rank">{{ card.rank }}</span>

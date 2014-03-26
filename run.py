@@ -11,16 +11,19 @@ def index():
 
     return template( 'main', drawDeck = topOfDrawDeck, activeDeck = pyramid.activeDeck, pyramid = pyramid.pyramid )
 
-@route('/drawFromDeck')
+
+@route('/drawFromMainDeck')
 def drawFromDeck():
     lastCard = pyramid.drawDeckdraw();
     card = pyramid.drawDeckTop()
 
     return { 'suit': card.suit, 'rank': card.rank, 'val': card.value, 'lastcard': lastCard }
 
+
 @route('/setDifficulty/:difficulty')
 def setDifficulty(difficulty='easy'):
     pyramid.setDifficulty(difficulty)
+
 
 @route('/newgame')
 def newgame():
@@ -33,9 +36,11 @@ def resetgame():
     #pyramid.resetGame()
     return {'lol': 'reset'}
 
+
 @route('/undolastmove')
 def undolastmove():
     pyramid.Undo()
+
 
 @route('/isfree/:i/:j')
 def isfree(i,j):
@@ -48,13 +53,18 @@ def pyramidToPyramid(i, j, k, l):
         'success': pyramid.pyramidToPyramid( int( i ), int( j ), int( k ), int( l ) )
         };
 
+
 @route('/deckToPyramid/:fromDraw/:i/:j')
 def deckToPyramid( fromDraw, i, j):
-    card = pyramid.drawDeck[0] if bool( fromDraw ) == True else pyramid.activeDeck[-1]
+    card = pyramid.drawDeckTop() if int( fromDraw ) == True else pyramid.activeDeckTop()
+
+    if card is False:
+        return { 'success': False }
 
     return {
-        'success': pyramid.deckToPyramid( card, bool( fromDraw ), int( i ), int( j ) )
+        'success': pyramid.deckToPyramid( card, int( fromDraw ), int( i ), int( j ) )
         };
+
 
 @route('/deckToDeck')
 def deckToDeck():
@@ -66,12 +76,25 @@ def deckToDeck():
 
     return { 'success': pyramid.deckToDeck( drawCard, activeCard ) };
 
+
+@route('/checkKingPyr/:i/:j')
+def checkKingPyr(i, j):
+    return { 'success': pyramid.checkKingPyr( int( i ), int( j ) ) };
+
+
+@route('/checkKingDeck/:i/:j')
+def checkKingDeck(i, j):
+    return { 'success': pyramid.checkKingPyr( int( i ), int( j ) ) };
+
+
 @route('/static/<filename>')
 def server_static(filename):
     return static_file(filename, root='./static')
 
+
 @route('/static/<path:path>')
 def callback(path):
     return static_file(path, root='./static')
+
 
 run(reloader=True, host='localhost', port=8080)

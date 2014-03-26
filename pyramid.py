@@ -188,7 +188,7 @@ class Pyramid:
 		    return False
 
 	def activeDeckTop(self):
-	    if len(self.activeDeckTop) > 0:
-	        return self.activeDeckTop[-1]
+	    if len(self.activeDeck) > 0:
+	        return self.activeDeck[-1]
 	    else:
 	        return False

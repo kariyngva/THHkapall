@@ -29,6 +29,7 @@ class Pyramid:
 		self.tempPyramid = copy.deepcopy(self.pyramid)
 		self.tempDrawDeck = deque()
 		self.tempDiscardpile = deque()
+		self.tempScore = 0
 
 	#byggir píramídann sjálfann sem lista af listum
 	#hvert stak í listunum inniheldur spil og hnit fyrir foreldri og börn sbr. tré
@@ -39,7 +40,7 @@ class Pyramid:
 			thisLevel = []
 			for j in range (0,i+1):
 			  nxtCard = self.deck.draw()
-			  pyrSpotSpecs = [nxtCard, self.parents(i,j), self.children(i,j)] #hver eind
+			  pyrSpotSpecs = [nxtCard, self.parents(i,j), self.children(i,j), True] #hver eind
 			  thisLevel.append(pyrSpotSpecs)
 
 			pyr.append(thisLevel)
@@ -51,6 +52,7 @@ class Pyramid:
 		self.tempDiscardpile = copy.deepcopy(self.discardPile)
 		self.tempActiveDeck = copy.deepcopy(self.activeDeck)
 		self.tempDifficulty = self.difficulty
+		self.tempScore = self.score
 		#need to save score state
 
 	def returnToInit(self):
@@ -67,6 +69,7 @@ class Pyramid:
 		self.discardPile = copy.deepcopy(self.tempDiscardpile)
 		self.activeDeck = copy.deepcopy(self.tempActiveDeck)
 		self.difficulty = self.tempDifficulty
+		self.score = tempScore
 
 	#dregur spil úr bunka og setur það í activeDeck
 	#þá sést næsta spil í drawDeck
@@ -120,6 +123,7 @@ class Pyramid:
 			self.pyramid[i-1][j-1][2][1]= -1
 		if j!=i:
 			self.pyramid[i-1][j][2][0]= -1
+		self.pyramid[i][j][4] = False
 
 	# athugar spil dregið frá píramídda á annað spil í píramídda
 	#i1 og j1 er hnit fyrir spilið sem er verið að draga

@@ -2,6 +2,7 @@
 import unittest
 #from Deck import *
 from pyramid import*
+from highscore import*
 
 class testKapallFunctions(unittest.TestCase):
     def test_Card(self):
@@ -47,6 +48,12 @@ class testKapallFunctions(unittest.TestCase):
         self.assertTrue(leikur2.pyramid)
         self.assertFalse(leikur2.trashDeck)
         self.assertFalse(leikur2.trashDeck)
+
+    def test_highscore(self):
+
+        self.assertTrue(input_score(1,'abc'))
+        self.assertTrue(top10_highscores())
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2, exit=False)

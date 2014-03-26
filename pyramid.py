@@ -7,6 +7,9 @@ from Deck import *
 class Pyramid:
 
 	def __init__(self, difficulty):
+		self.newGame(difficulty)
+
+	def newGame(self, difficulty):
 		self.deck = Deck() #stokkurinn
 		self.pyramid = self.buildPyr() #hluti af stokknum verður pýramíddi
 		self.drawDeck = deque() #fyrri stokkurinn af spilum
@@ -48,6 +51,7 @@ class Pyramid:
 		self.tempDiscardpile = copy.deepcopy(self.discardPile)
 		self.tempActiveDeck = copy.deepcopy(self.activeDeck)
 		self.tempDifficulty = self.difficulty
+		#need to save score state
 
 	def returnToInit(self):
 		self.pyramid = copy.deepcopy(self.initPyramid)
@@ -55,6 +59,7 @@ class Pyramid:
 		self.activeDeck = deque()
 		self.difficulty = self.initDifficulty
 		self.discardPile = deque()
+		self.score = 0
 
 	def Undo(self):
 		self.pyramid = copy.deepcopy(self.tempPyramid)
@@ -150,13 +155,14 @@ class Pyramid:
 			return False
 		return False
 
-	def deckToDeck(self, drawCard, activeCard):
-		if drawCard.value + activeCard.value == 13:
-			self.saveState()
-			self.discardPile.append(self.drawDeck.pop())
-			self.discardPile.append(self.activeDeck.pop())
-			self.score += 200
-			return True
+	def deckToDeck(self):
+		if self.drawDeckTop() and self.activeDeckTop():
+			if self.drawDeckTop().value + self.activeDeckTop().value == 13:
+				self.saveState()
+				self.discardPile.append(self.drawDeck.popleft())
+				self.discardPile.append(self.activeDeck.popleft())
+				self.score += 200
+				return True
 		return False
 
 	def checkKingPyr(self, i, j):
@@ -174,9 +180,9 @@ class Pyramid:
 		if card.value == 13:
 			self.saveState()
 			if fromDraw:
-				self.discardPile.append(drawDeck.pop())
+				self.discardPile.append(self.drawDeck.pop())
 			else:
-				self.discardPile.append(activeDeck.pop())
+				self.discardPile.append(self.activeDeck.pop())
 			self.score += 100
 			return True
 		return False
@@ -192,3 +198,6 @@ class Pyramid:
 	        return self.activeDeck[-1]
 	    else:
 	        return False
+
+	def getScore(self):
+		return self.score

@@ -1,5 +1,5 @@
 #coding=UTF-8
-from bottle import route, run, template, post, request, static_file
+from bottle import route, run, template, post, request, static_file, redirect
 from pyramid import *
 
 pyramid = Pyramid(3)
@@ -10,7 +10,6 @@ def index():
     #topOfActiveDeck = pyramid.activeDeck
 
     return template( 'main', drawDeck = topOfDrawDeck, activeDeck = pyramid.activeDeck, pyramid = pyramid.pyramid )
-
 
 @route('/drawFromMainDeck')
 def drawFromDeck():
@@ -26,20 +25,26 @@ def setDifficulty(difficulty='easy'):
 
 
 @route('/newgame')
-def newgame():
-    #pyramid.newgame()
-    return {'lol': 'newgame'}
+def newGame():
+    pyramid.newGame(1)
+    redirect("/")
 
 
 @route('/resetgame')
 def resetgame():
-    #pyramid.resetGame()
-    return {'lol': 'reset'}
+    pyramid.returnToInit()
+    redirect("/")
 
 
 @route('/undolastmove')
 def undolastmove():
     pyramid.Undo()
+    redirect("/")
+
+
+@route('/updatescore')
+def updatescore():
+    return { 'score': pyramid.getScore() }
 
 
 @route('/isfree/:i/:j')
@@ -82,9 +87,20 @@ def checkKingPyr(i, j):
     return { 'success': pyramid.checkKingPyr( int( i ), int( j ) ) };
 
 
-@route('/checkKingDeck/:i/:j')
-def checkKingDeck(i, j):
-    return { 'success': pyramid.checkKingPyr( int( i ), int( j ) ) };
+@route('/kingdeck/:fromDraw')
+def checkKingDeck(fromDraw):
+    card = pyramid.drawDeckTop() if int( fromDraw ) == True else pyramid.activeDeckTop()
+
+    if card is False:
+        return { 'success': False }
+
+    return {
+        'success': pyramid.checkKingDeck( int( fromDraw ), card )
+        };
+
+@route('/decktodeck')
+def deckToDeck():
+    return { 'success': pyramid.deckToDeck() };
 
 
 @route('/static/<filename>')

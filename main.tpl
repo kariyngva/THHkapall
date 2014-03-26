@@ -18,8 +18,8 @@
     <div class="nav">
         <ul>
           <li><a href="/newgame">New game</a></li>
-          <li><a href="/url">Reset game</a></li>
-          <li><a href="/url">Undo last move</a></li>
+          <li><a href="/resetgame">Reset game</a></li>
+          <li><a href="/undolastmove">Undo last move</a></li>
           <li class="difficulty">
             <span>Set difficulty</span>
             <ul>
@@ -40,6 +40,7 @@
             <span class="value v1">{{ drawDeck.value }}</span>
             <span class="value v2">{{ drawDeck.value }}</span>
             <span class="rank">{{ drawDeck.rank }}</span>
+            <!-- index ekkert notað hér - aðeins til að forðast JS villur -->
             <span class="index i">0</span>
             <span class="index j">0</span>
         </div>
@@ -50,6 +51,7 @@
             <div class="card free {{ activeDeck[-1].suit }}">
                 <span class="value">{{ activeDeck[-1].value }}</span>
                 <span class="rank">{{ activeDeck[-1].rank }}</span>
+                <!-- index ekkert notað hér - aðeins til að forðast JS villur -->
                 <span class="index i">0</span>
                 <span class="index j">0</span>
             </div>

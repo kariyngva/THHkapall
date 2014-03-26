@@ -4,6 +4,7 @@ var $ = jQuery,
     $bdy = $('body'),
     $html = $('html'),
     drawDeck = $('.drawdeck'),
+    score = $('.score'),
     trashDeck = $('.trashdeck'),
 
     initDragDrop = function (cards) {
@@ -35,7 +36,7 @@ var $ = jQuery,
             stop: function (event, ui) {
                 if($('.drawdeck').find('.card').length === 0){
                   ;;;window.console&&console.log( ['drawdeck empty'] );
-                  drawDeck.trigger('click');
+                  //drawDeck.trigger('click');
                 }
             }
           });
@@ -58,6 +59,9 @@ var $ = jQuery,
             },
             drop: function (event, ui) {
                 cardDroppedOn = $(this);
+
+                var isDeckToDeck = ( cardDroppedOn.parents('.drawdeck').length && cardDragged.parents('.trashdeck').length )
+                                  || ( cardDroppedOn.parents('.trashdeck').length && cardDragged.parents('.drawdeck').length );
 
                 //indexes of cards in the pyramid.
                 var cIndex = {
@@ -85,6 +89,17 @@ var $ = jQuery,
                   cardDragged.addClass('gone');
                   drawFromMainDeck();
                 }
+                else if ( isDeckToDeck && deckToDeck() )
+                {
+                  ;;;window.console&&console.log( ['bled'] );
+                  cardDragged.addClass('gone');
+                  cardDroppedOn.addClass('gone');
+
+                  //búa til fall sem checkar á trashdeck og bætir við efsta spilinu ef eitthvað
+                  drawFromMainDeck();
+                }
+
+                updateScore();
 
             },
             over: function (event, ui) {
@@ -95,6 +110,19 @@ var $ = jQuery,
             }
           });
       },
+
+    updateScore = function () {
+      //var result = 0;
+        $.ajax({
+          url: '/updatescore',
+          //async: false,
+          dataType: 'json'
+        }).done(function(data) {
+            //result = data.score;
+            score.text(data.score);
+            ;;;window.console&&console.log( data.score );
+          });
+    },
 
     drawFromMainDeck = function () {
       var result = false;
@@ -118,12 +146,14 @@ var $ = jQuery,
 
         if( result != false )
         {
-          var newTrashCard = drawDeck.find('.card');
-          if( newTrashCard.length )
+          var newTrashCard = drawDeck.find('.card')
+
+          if( drawDeck.find('.card').length )
           {
-            ;;;window.console&&console.log( ['mm'] );
-            trashDeck.find('.card').replaceWith( newTrashCard );
-            //trashDeck.prepend( newTrashCard );
+            ;;;window.console&&console.log( 'me derp' );
+            trashDeck.empty();
+            //trashDeck.find('.card').replaceWith( newTrashCard);
+            trashDeck.prepend( newTrashCard );
           }
 
           drawDeck.prepend( result );
@@ -156,6 +186,18 @@ var $ = jQuery,
         return result;
     },
 
+    checkKingDeck = function ( card ) {
+      var result = false;
+        $.ajax({
+          url: '/kingdeck/' + card.parents('.drawdeck').length,
+          async: false,
+          dataType: 'json'
+        }).done(function(data) {
+            result = data.success;
+          });
+        return result;
+    },
+
     pyramidToPyramid = function ( i, j, k, l ) {
       var result = false;
         $.ajax({
@@ -168,6 +210,19 @@ var $ = jQuery,
         return result;
     },
 
+    deckToDeck = function () {
+      var result = false;
+        $.ajax({
+          url: '/decktodeck',
+          async: false,
+          dataType: 'json'
+        }).done(function(data) {
+            result = data.success;
+            ;;;window.console&&console.log( ['raw'] );
+          });
+        return result;
+    },
+
     deckToPyramid = function ( card, i, j ) {
       var result = false;
         $.ajax({
@@ -176,10 +231,9 @@ var $ = jQuery,
           dataType: 'json'
         }).done(function(data) {
             result = data.success;
-            ;;;window.console&&console.log( 'deckToPyramid'+result );
-            ;;;window.console&&console.log( card );
-            ;;;window.console&&console.log( card.parents('.drawdeck').length );
-            //card.remove();
+            ;;;window.console&&console.log( drawDeck.find('.card').length );
+            card.delay(1000).remove();
+            ;;;window.console&&console.log( drawDeck.find('.card').length );
             //TODO:Sækja nýtt spil í drawdeck
           });
         return result;
@@ -251,9 +305,10 @@ var $ = jQuery,
 
     //Bindum smelli á öll spil og athugum þegar smellt er á þau hvort gildi spilsins sé 13
     //og fjarlægjum þá úr píramída/stokki.
-    $bdy.on('click', '.card', function (e) {
+    $bdy.on('click', '.king', function (e) {
         var card = $(this),
             inPyramid = card.parents('.pyramid').length,
+            inDrawDeck = card.parents('.decks').length,
             cIndex = {
               i: parseInt(card.find('.i').text(), 10 ),
               j: parseInt(card.find('.j').text(), 10 )
@@ -263,10 +318,13 @@ var $ = jQuery,
         {
           card.addClass('gone');
         }
-        else if( false /*checkKingDeck( card.parents('.decks').length )*/ )
+        else if( checkKingDeck( card ) )
         {
           card.addClass('gone');
+          drawFromMainDeck();
         }
+
+        updateScore();
       });
 
     //Initum öll spilin sem draggable og droppable sem eru í dominu.

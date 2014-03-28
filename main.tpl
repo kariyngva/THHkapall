@@ -36,7 +36,11 @@
 
 <div class="decks">
     <div class="drawdeck">
-        <div class="card free {{ drawDeck.suit }}">
+        %if drawDeck.value > 10:
+            <div class="card free {{ drawDeck.suit }} {{ drawDeck.rank }}">
+        %else:
+            <div class="card free {{ drawDeck.suit }}">
+        %end
             <span class="value v1">{{ drawDeck.value }}</span>
             <span class="value v2">{{ drawDeck.value }}</span>
             <span class="rank">{{ drawDeck.rank }}</span>
@@ -48,9 +52,15 @@
 
     <div class="trashdeck">
         %if len( activeDeck ) > 0:
-            <div class="card free {{ activeDeck[-1].suit }}">
-                <span class="value">{{ activeDeck[-1].value }}</span>
-                <span class="rank">{{ activeDeck[-1].rank }}</span>
+            %activeDeckTop = activeDeck[-1]
+            %if activeDeckTop.value > 10:
+                <div class="card free {{ activeDeckTop.suit }} {{ activeDeckTop.rank }}">
+            %else:
+                <div class="card free {{ activeDeckTop.suit }}">
+            %end
+                <span class="value v1">{{ activeDeckTop.value }}</span>
+                <span class="value v2">{{ activeDeckTop.value }}</span>
+                <span class="rank">{{ activeDeckTop.rank }}</span>
                 <!-- index ekkert notað hér - aðeins til að forðast JS villur -->
                 <span class="index i">0</span>
                 <span class="index j">0</span>

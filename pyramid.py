@@ -69,7 +69,7 @@ class Pyramid:
 		self.discardPile = copy.deepcopy(self.tempDiscardpile)
 		self.activeDeck = copy.deepcopy(self.tempActiveDeck)
 		self.difficulty = self.tempDifficulty
-		self.score = tempScore
+		self.score = self.tempScore
 
 	#dregur spil úr bunka og setur það í activeDeck
 	#þá sést næsta spil í drawDeck

@@ -122,6 +122,7 @@ var $ = jQuery,
             if( data.lastcard != -1 )
             {
               var isHigh = data.val > 10 ? data.rank : '';
+              ;;;window.console&&console.log( isHigh );
               result = $('<div class="card free ' + data.suit + ' ' + isHigh + '">' +
                             '<span class="value v1">' + data.val + '</span>' +
                             '<span class="value v2">' + data.val + '</span>' +
@@ -132,6 +133,7 @@ var $ = jQuery,
             }
           });
 
+        //Gerum ekkert ef stokkurinn er tómur.
         if( result != false )
         {
           var newTrashCard = drawDeck.find('.card')
@@ -144,8 +146,6 @@ var $ = jQuery,
 
           drawDeck.prepend( result );
         }
-
-        return result;
     },
 
     isFree = function ( i, j ) {
@@ -223,13 +223,18 @@ var $ = jQuery,
 
 
     //Bindum smell á stokk.
-    drawDeck.on('click.drawDeck', function (e) {
-        drawFromMainDeck();
-    });
+    $bdy.on('click.drawCard', '.drawdeck .card', function (e) {
+        var card = $(this);
+        //Drögum aðeins ef spilið er ekki
+          drawFromMainDeck();
+        /*if( !card.is('.king') )
+        {
+        }*/
+      });
 
     //Höndlum smell á erfileikatakka
     //TODO:refactor/ eyða
-    $('.difficulty a').on('click', function (e) {
+    /*$('.difficulty a').on('click', function (e) {
         e.preventDefault();
 
         var link = $(this);
@@ -239,10 +244,10 @@ var $ = jQuery,
             $('.difficulty a').removeClass('current');
             link.addClass('current');
           });
-      });
+      });*/
 
-    //Bindum smelli á öll spil og athugum þegar smellt er á þau hvort gildi spilsins sé 13
-    //og fjarlægjum þá úr píramída/stokki.
+    //Bindum smelli alla kónga og athugum þegar smellt er á þau hvort við megum fjarlægja þá
+    //úr píramída eða stokk
     $bdy.on('click', '.king', function (e) {
         var card = $(this),
             inPyramid = card.parents('.pyramid').length,
@@ -259,12 +264,12 @@ var $ = jQuery,
         else if( checkKingDeck( card ) )
         {
           card.addClass('gone');
-          drawFromMainDeck();
+          //drawFromMainDeck();
         }
 
         updateScore();
       });
 
-    //Initum öll spilin sem draggable og droppable sem eru í dominu.
+    //Gerum öll spilin í dominu draggable og droppable.
     initDragDrop( $('.card') );
 })($);

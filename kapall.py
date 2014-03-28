@@ -102,6 +102,10 @@ def checkKingDeck(fromDraw):
 def deckToDeck():
     return { 'success': pyramid.deckToDeck() };
 
+##Debug
+@route('/debug')
+def debug():
+    return template( 'debug', pyramid = pyramid )
 
 @route('/static/<filename>')
 def server_static(filename):

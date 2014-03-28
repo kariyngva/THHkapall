@@ -1,6 +1,7 @@
 #coding=UTF-8
 from bottle import route, run, template, post, request, static_file, redirect
 from pyramid import *
+from highscore import*
 
 pyramid = Pyramid(3)
 
@@ -51,6 +52,12 @@ def undolastmove():
     pyramid.Undo()
     redirect("/")
 
+
+@route('/highscore')
+def highscore():
+    dafuq= top10_highscores()
+    return dafuq
+    #redirect("/")
 
 @route('/updatescore')
 def updatescore():

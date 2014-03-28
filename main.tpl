@@ -20,6 +20,7 @@
           <li><a href="/newgame">New game</a></li>
           <li><a href="/resetgame">Reset game</a></li>
           <li><a href="/undolastmove">Undo last move</a></li>
+          <li><a href="/highscore">Highscore</a></li>
           <li class="difficulty">
             <span>Set difficulty</span>
             <ul>
@@ -80,7 +81,7 @@
             <div class="row r{{ i }}">
             %for j in range ( 0, i + 1 ):
                 %card = pyramid[i][j][0]
-                %isgone = '' if pyramid[i][j][3] is True else 'hidden'
+                %isgone = '' 
                 %if card.value > 10:
                     <div class="card {{ card.suit }} {{ card.rank }} {{ isgone }}">
                 %else:

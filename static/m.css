@@ -29,12 +29,17 @@ body {
 }
 
 .decks:after { content:""; display:block; clear:both; height:0;  visibility:hidden; }
+
 .decks {
-    border: 1px solid blue;
     clear: both;
     width: 260px;
     position: absolute;
-
+}
+.drawdeck {
+    border: 1px solid red;
+}
+.trashdeck {
+    border: 1px solid blue;
 }
 .drawdeck,
 .trashdeck {

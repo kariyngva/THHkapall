@@ -75,23 +75,6 @@ var $ = jQuery,
                   cardDroppedOn.addClass('gone');
                   cardDragged.addClass('gone');
                 }
-                else if( cardDroppedOn.parents('.pyramid').length &&
-                         deckToPyramid( cardDragged, cIndex.k, cIndex.l ) )
-                {
-                  cardDroppedOn.addClass('gone');
-                  cardDragged.addClass('gone');
-
-                  //
-                  if( cardDragged.parents('.drawdeck').length )
-                  {
-                    drawFromMainDeck();
-                  }
-                  else
-                  {
-
-                  }
-
-                }
                 else if ( isDeckToDeck && deckToDeck() )
                 {
                   cardDragged.addClass('gone');
@@ -99,6 +82,25 @@ var $ = jQuery,
 
                   //TODO:búa til fall sem checkar á trashdeck og bætir við efsta spilinu ef eitthvað
                   drawFromMainDeck();
+                }
+
+                if( cardDragged.parents('.drawdeck').length && cardDroppedOn.parents('.pyramid').length &&
+                         deckToPyramid( cardDragged, cIndex.k, cIndex.l ) )
+                {
+                  cardDroppedOn.addClass('gone');
+                  cardDragged.addClass('gone');
+
+                  drawFromMainDeck();
+                }
+
+                if( cardDragged.parents('.trashdeck').length && cardDroppedOn.parents('.pyramid').length &&
+                         deckToPyramid( cardDragged, cIndex.k, cIndex.l ) )
+                {
+                  cardDroppedOn.addClass('gone');
+                  cardDragged.addClass('gone');
+
+                  //drawFromActiveDeck();
+                  drawFromActiveDeck();
                 }
 
                 updateScore();
@@ -154,6 +156,34 @@ var $ = jQuery,
           }
 
           drawDeck.prepend( result );
+        }
+    },
+
+    drawFromActiveDeck = function () {
+      var result = false;
+        $.ajax({
+          url: '/drawFromActiveDeck',
+          async: false,
+          dataType: 'json'
+        }).done( function( data ) {
+            if( data.lastcard != false )
+            {
+              var isHigh = data.val > 10 ? data.rank : '';
+              result = $('<div class="card free ' + data.suit + ' ' + isHigh + '">' +
+                            '<span class="value v1">' + data.val + '</span>' +
+                            '<span class="value v2">' + data.val + '</span>' +
+                          '</div>');
+
+              //Gerum spilið drag/droppable
+              initDragDrop( result );
+            }
+          });
+
+        //Gerum ekkert ef stokkurinn er tómur.
+        if( result != false )
+        {
+          ;;;window.console&&console.log( ['mjaw'] );
+          trashDeck.prepend( result );
         }
     },
 
@@ -225,7 +255,8 @@ var $ = jQuery,
           dataType: 'json'
         }).done(function(data) {
             result = data.success;
-            card.remove();
+            if( result )
+              card.remove();
           });
         return result;
       };
@@ -236,6 +267,7 @@ var $ = jQuery,
         var card = $(this);
         //Drögum aðeins ef spilið er ekki
           drawFromMainDeck();
+          ;;;window.console&&console.log( [] );
         /*if( !card.is('.king') )
         {
         }*/

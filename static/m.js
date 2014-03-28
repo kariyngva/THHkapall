@@ -80,7 +80,17 @@ var $ = jQuery,
                 {
                   cardDroppedOn.addClass('gone');
                   cardDragged.addClass('gone');
-                  drawFromMainDeck();
+
+                  //
+                  if( cardDragged.parents('.drawdeck').length )
+                  {
+                    drawFromMainDeck();
+                  }
+                  else
+                  {
+
+                  }
+
                 }
                 else if ( isDeckToDeck && deckToDeck() )
                 {
@@ -122,7 +132,6 @@ var $ = jQuery,
             if( data.lastcard != -1 )
             {
               var isHigh = data.val > 10 ? data.rank : '';
-              ;;;window.console&&console.log( isHigh );
               result = $('<div class="card free ' + data.suit + ' ' + isHigh + '">' +
                             '<span class="value v1">' + data.val + '</span>' +
                             '<span class="value v2">' + data.val + '</span>' +

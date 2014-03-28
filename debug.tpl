@@ -47,7 +47,7 @@
             %for j in range ( 0, i + 1 ):
             <li>
                 %card = pyramid.pyramid[i][j][0]
-                %isgone = 'visible' 
+                %isgone = 'visible' if pyramid.pyramid[i][j][3] is True else 'hidden'
                 <span>[{{ card.suit }}]</span>
                 <span>[{{ card.value }}]</span>
                 <span>[{{ isgone }}]</span>

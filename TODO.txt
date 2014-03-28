@@ -1,0 +1,4 @@
+#TODO frá smá playtesting
+#Activedeck í píramídda, activedeck spil hverfur en ekki hitt
+#kóngkur í drawDeck, það kemur ekki nýtt úr activedeck
+#decTOdeck, kemur ekki nýtt spil í active deck

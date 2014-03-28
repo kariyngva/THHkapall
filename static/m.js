@@ -53,6 +53,8 @@ var $ = jQuery,
                   return false;
                 }
 
+                //þurfum að athuga hvort að spilið sé free.
+
                 return true;
             },
             drop: function (event, ui) {
@@ -166,7 +168,7 @@ var $ = jQuery,
           async: false,
           dataType: 'json'
         }).done( function( data ) {
-            if( data.lastcard != false )
+            if( data.lastcard != -1 )
             {
               var isHigh = data.val > 10 ? data.rank : '';
               result = $('<div class="card free ' + data.suit + ' ' + isHigh + '">' +
@@ -266,11 +268,15 @@ var $ = jQuery,
     $bdy.on('click.drawCard', '.drawdeck .card', function (e) {
         var card = $(this);
         //Drögum aðeins ef spilið er ekki
-          drawFromMainDeck();
-          ;;;window.console&&console.log( [] );
-        /*if( !card.is('.king') )
+
+        if( checkKingDeck( card ) )
         {
-        }*/
+          ;;;window.console&&console.log( ['mm'] );
+          card.addClass('gone');
+          updateScore();
+        }
+
+        drawFromMainDeck();
       });
 
     //Höndlum smell á erfileikatakka
@@ -302,11 +308,11 @@ var $ = jQuery,
         {
           card.addClass('gone');
         }
-        else if( checkKingDeck( card ) )
+        /*else if( checkKingDeck( card ) )
         {
           card.addClass('gone');
           //drawFromMainDeck();
-        }
+        }*/
 
         updateScore();
       });

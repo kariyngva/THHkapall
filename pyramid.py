@@ -153,7 +153,7 @@ class Pyramid:
 				if fromDraw:
 					self.discardPile.append(self.drawDeck.popleft())
 				else:
-					self.discardPile.append(self.activeDeck.popleft())
+					self.discardPile.append(self.activeDeck.pop())
 				self.score += 200
 				return True
 			return False

@@ -47,19 +47,29 @@ var $ = jQuery,
                 var val1 = parseInt( elm.find('.value').eq(0).text(), 10 ),
                     val2 = parseInt( $(this).find('.value').eq(0).text(), 10 );
 
+                var card = $(this),
+                    cindex = {
+                      i: parseInt(card.find('.i').text(), 10 ),
+                      j: parseInt(card.find('.j').text(), 10 )
+                    };
                 //Ætlum ekki að accepta drop ef spilin eru ekki með 13 sem samanlagt gildi
-                if( (val1 + val2) != 13 )
+
+                if( card.parents('.pyramid').length && isFree( cindex.i, cindex.j ) && (val1 + val2) === 13 )
                 {
-                  return false;
+                  return true;
                 }
 
-                //þurfum að athuga hvort að spilið sé free.
+                if( (val1 + val2) === 13 )
+                {
+                  return true;
+                }
 
-                return true;
+                return false;
             },
             drop: function (event, ui) {
                 cardDroppedOn = $(this);
 
+                //Erum við að draga milli stokka
                 var isDeckToDeck = ( cardDroppedOn.parents('.drawdeck').length && cardDragged.parents('.trashdeck').length )
                                   || ( cardDroppedOn.parents('.trashdeck').length && cardDragged.parents('.drawdeck').length );
 
@@ -71,6 +81,7 @@ var $ = jQuery,
                       l: parseInt(cardDroppedOn.find('.j').text(), 10 )
                     };
 
+                //Athugum hvort við séum að draga spil innan píramída
                 if( cardDragged.parents('.pyramid').length &&
                     pyramidToPyramid(cIndex.i, cIndex.j, cIndex.k, cIndex.l) )
                 {
@@ -101,7 +112,6 @@ var $ = jQuery,
                   cardDroppedOn.addClass('gone');
                   cardDragged.addClass('gone');
 
-                  //drawFromActiveDeck();
                   drawFromActiveDeck();
                 }
 
@@ -117,6 +127,7 @@ var $ = jQuery,
           });
       },
 
+    //Ajax call til að uppfæra stigin
     updateScore = function () {
         $.ajax({
           url: '/updatescore',
@@ -126,7 +137,9 @@ var $ = jQuery,
           });
     },
 
-    drawFromMainDeck = function () {
+    drawFromMainDeck = function ( wasKing ) {
+      wasKing = wasKing === undefined ? false : true;
+
       var result = false;
         $.ajax({
           url: '/drawFromMainDeck',
@@ -151,7 +164,7 @@ var $ = jQuery,
         {
           var newTrashCard = drawDeck.find('.card')
 
-          if( drawDeck.find('.card').length )
+          if( drawDeck.find('.card').length && !wasKing )
           {
             trashDeck.empty();
             trashDeck.prepend( newTrashCard );
@@ -184,7 +197,6 @@ var $ = jQuery,
         //Gerum ekkert ef stokkurinn er tómur.
         if( result != false )
         {
-          ;;;window.console&&console.log( ['mjaw'] );
           trashDeck.prepend( result );
         }
     },
@@ -267,31 +279,22 @@ var $ = jQuery,
     //Bindum smell á stokk.
     $bdy.on('click.drawCard', '.drawdeck .card', function (e) {
         var card = $(this);
-        //Drögum aðeins ef spilið er ekki
 
+        //Drögum aðeins ef spilið er ekki
         if( checkKingDeck( card ) )
         {
-          ;;;window.console&&console.log( ['mm'] );
+          drawFromMainDeck( true );
           card.addClass('gone');
+          card.remove();
           updateScore();
         }
+        else
+        {
+          drawFromMainDeck();
+        }
 
-        drawFromMainDeck();
+
       });
-
-    //Höndlum smell á erfileikatakka
-    //TODO:refactor/ eyða
-    /*$('.difficulty a').on('click', function (e) {
-        e.preventDefault();
-
-        var link = $(this);
-        $.ajax({
-          url: link.attr('href')
-        }).done(function(data) {
-            $('.difficulty a').removeClass('current');
-            link.addClass('current');
-          });
-      });*/
 
     //Bindum smelli alla kónga og athugum þegar smellt er á þau hvort við megum fjarlægja þá
     //úr píramída eða stokk

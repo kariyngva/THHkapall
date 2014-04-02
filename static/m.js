@@ -70,6 +70,7 @@ var $ = jQuery,
                       j: parseInt(card.find('.j').text(), 10 )
                     };
 
+                    ;;;window.console&&console.log( ['accept call'] );
                 //Ætlum ekki að accepta drop ef spilin eru ekki með 13 sem samanlagt gildi
                 if( card.parents('.pyramid').length && isFree( cindex.i, cindex.j ) && (val1 + val2) === 13 )
                 {
@@ -112,7 +113,7 @@ var $ = jQuery,
                   cardDragged.remove();
                   cardDroppedOn.remove();
 
-                  drawFromMainDeck2();
+                  getTopOfDraw();
                   drawFromActiveDeck();
 
                 }
@@ -122,7 +123,7 @@ var $ = jQuery,
                   cardDroppedOn.addClass('gone');
                   cardDragged.addClass('gone');
 
-                  drawFromMainDeck2();
+                  getTopOfDraw();
                 }
                 else if( cardDragged.parents('.trashdeck').length && cardDroppedOn.parents('.pyramid').length &&
                          deckToPyramid( cardDragged, cIndex.k, cIndex.l ) )
@@ -145,6 +146,13 @@ var $ = jQuery,
           dataType: 'json'
         }).done(function(data) {
             score.text(data.score);
+
+            if( isGameWon() )
+            {
+              setTimeout(function () {
+                alert("Til hamingju þú hefur unnið!");
+                }, 1000);
+            }
           });
     },
 
@@ -158,9 +166,7 @@ var $ = jQuery,
     },
 
 
-    drawFromMainDeck = function ( wasKing ) {
-      wasKing = wasKing === undefined ? false : true;
-      ;;;window.console&&console.log( 'kall á drawFromMainDeck með: ' + wasKing );
+    drawFromMainDeck = function () {
       var result = false;
         $.ajax({
           url: '/drawFromMainDeck',
@@ -185,9 +191,8 @@ var $ = jQuery,
         {
           var newTrashCard = drawDeck.find('.card')
 
-          if( drawDeck.find('.card').length && !wasKing )
+          if( drawDeck.find('.card').length )
           {
-            ;;;window.console&&console.log( 'empty trashDeck' );
             trashDeck.empty();
             trashDeck.prepend( newTrashCard );
           }
@@ -197,11 +202,10 @@ var $ = jQuery,
     },
 
 
-    drawFromMainDeck2 = function ( wasKing ) {
-      wasKing = wasKing === undefined ? false : true;
+    getTopOfDraw = function () {
       var result = false;
         $.ajax({
-          url: '/drawFromMainDeck2',
+          url: '/getTopOfDraw',
           async: false,
           dataType: 'json'
         }).done( function( data ) {
@@ -337,6 +341,18 @@ var $ = jQuery,
               card.remove();
           });
         return result;
+      },
+
+    isGameWon = function () {
+      var result = false;
+        $.ajax({
+          url: '/checkwin',
+          async: false,
+          dataType: 'json'
+        }).done(function(data) {
+            result = data.success;
+          });
+        return result;
       };
 
 
@@ -347,7 +363,7 @@ var $ = jQuery,
         //Drögum aðeins ef spilið er ekki
         if( checkKingDeck( card ) )
         {
-          drawFromMainDeck( true );
+          getTopOfDraw();
           card.addClass('gone');
           card.remove();
           updateScore();

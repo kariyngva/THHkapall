@@ -20,8 +20,8 @@ def drawFromDeck():
     return { 'suit': card.suit, 'rank': card.rank, 'val': card.value, 'lastcard': lastCard }
 
 
-@route('/drawFromMainDeck2')
-def drawFromDeck():
+@route('/getTopOfDraw')
+def getTopOfDraw():
     card = pyramid.drawDeckTop()
     if card is False:
         return { 'lastcard': -1 }

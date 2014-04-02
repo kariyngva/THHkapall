@@ -75,7 +75,7 @@ var $ = jQuery,
                 {
                   return true;
                 }
-                else if( (!card.parents('.pyramid').length && val1 + val2) === 13 )
+                else if( (!card.parents('.pyramid').length) && (val1 + val2) === 13 )
                 {
                   return true;
                 }
@@ -113,7 +113,7 @@ var $ = jQuery,
                   cardDroppedOn.remove();
 
                   drawFromMainDeck( true );
-                  drawFromActiveDeck();
+                  //drawFromActiveDeck();
                 }
                 else if( cardDragged.parents('.drawdeck').length && cardDroppedOn.parents('.pyramid').length &&
                          deckToPyramid( cardDragged, cIndex.k, cIndex.l ) )

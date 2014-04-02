@@ -7,6 +7,23 @@ var $ = jQuery,
     score = $('.score'),
     trashDeck = $('.trashdeck'),
 
+    trackTime = function ( startTime ) {
+      var timeElm = $('.time'),
+          minElm =timeElm.find('.minutes'),
+          secElm =timeElm.find('.seconds'),
+          timeInterval = setInterval( function () {
+            //Calculated elapsed time.
+            var currTime = new Date(),
+                elapsed = currTime.getTime() - startTime.getTime(),
+                minutes = Math.floor( ( elapsed / 1000 ) / 60 ),
+                seconds = Math.floor( ( elapsed / 1000 ) % 60 );
+
+                //Update dom
+                minElm.text( minutes < 10 ? '0' + minutes : minutes );
+                secElm.text( seconds < 10 ? '0' + seconds : seconds );
+            }, 1000);
+      },
+
     initDragDrop = function (cards) {
         //Gerum 'cards' draggable og droppable.
         cards
@@ -201,6 +218,18 @@ var $ = jQuery,
         }
     },
 
+    getStartTime = function ( i, j ) {
+      var result = false;
+        $.ajax({
+          url: '/getstarttime',
+          async: false,
+          dataType: 'json'
+        }).done(function(data) {
+            result = data.starttime;
+          });
+        return result;
+    },
+
     isFree = function ( i, j ) {
       var result = false;
         $.ajax({
@@ -322,4 +351,10 @@ var $ = jQuery,
 
     //Gerum öll spilin í dominu draggable og droppable.
     initDragDrop( $('.card') );
+
+    //log time
+    var startTime = getStartTime();
+    ;;;window.console&&console.log( parseInt(startTime, 10) );
+    ;;;window.console&&console.log( new Date().getTime() );
+    trackTime( startTime === false ? new Date() : new Date(parseInt(startTime), 10) );
 })($);

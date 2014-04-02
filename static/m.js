@@ -126,6 +126,15 @@ var $ = jQuery,
           });
     },
 
+    highscore = function () {
+        $.ajax({
+          url: '/highscore',
+          dataType: 'json'
+        }).done(function(data) {
+            score;
+          });
+    },
+
     drawFromMainDeck = function () {
       var result = false;
         $.ajax({

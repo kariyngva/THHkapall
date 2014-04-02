@@ -56,7 +56,7 @@ def undolastmove():
 @route('/highscore')
 def highscore():
     dafuq= top10_highscores()
-    return dafuq
+    return {"score": dafuq}
     #redirect("/")
 
 @route('/updatescore')

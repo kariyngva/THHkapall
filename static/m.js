@@ -321,8 +321,6 @@ var $ = jQuery,
         {
           drawFromMainDeck();
         }
-
-
       });
 
     //Bindum smelli alla kónga og athugum þegar smellt er á þau hvort við megum fjarlægja þá
@@ -354,7 +352,5 @@ var $ = jQuery,
 
     //log time
     var startTime = getStartTime();
-    ;;;window.console&&console.log( parseInt(startTime, 10) );
-    ;;;window.console&&console.log( new Date().getTime() );
-    trackTime( startTime === false ? new Date() : new Date(parseInt(startTime), 10) );
+    trackTime( startTime === false ? new Date() : new Date( startTime ) );
 })($);

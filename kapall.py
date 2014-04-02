@@ -128,7 +128,7 @@ def getStartTime():
 
 ##Debug
 @route('/debug')
-def getStartTime():
+def debug():
     return template( 'debug', pyramid = pyramid )
 
 

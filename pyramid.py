@@ -166,7 +166,7 @@ class Pyramid:
 			if self.drawDeckTop().value + self.activeDeckTop().value == 13:
 				self.saveState()
 				self.discardPile.append(self.drawDeck.popleft())
-				self.discardPile.append(self.activeDeck.popleft())
+				self.discardPile.append(self.activeDeck.pop())
 				self.score += 200
 				return True
 		return False

@@ -75,8 +75,7 @@ var $ = jQuery,
                 {
                   return true;
                 }
-
-                if( (val1 + val2) === 13 )
+                else if( !card.parents('.pyramid').length && (val1 + val2) === 13 )
                 {
                   return true;
                 }
@@ -113,13 +112,10 @@ var $ = jQuery,
                   cardDragged.remove();
                   cardDroppedOn.remove();
 
-
-                  //TODO:búa til fall sem checkar á trashdeck og bætir við efsta spilinu ef eitthvað
                   drawFromMainDeck( true );
                   drawFromActiveDeck();
                 }
-
-                if( cardDragged.parents('.drawdeck').length && cardDroppedOn.parents('.pyramid').length &&
+                else if( cardDragged.parents('.drawdeck').length && cardDroppedOn.parents('.pyramid').length &&
                          deckToPyramid( cardDragged, cIndex.k, cIndex.l ) )
                 {
                   cardDroppedOn.addClass('gone');
@@ -127,8 +123,7 @@ var $ = jQuery,
 
                   drawFromMainDeck();
                 }
-
-                if( cardDragged.parents('.trashdeck').length && cardDroppedOn.parents('.pyramid').length &&
+                else if( cardDragged.parents('.trashdeck').length && cardDroppedOn.parents('.pyramid').length &&
                          deckToPyramid( cardDragged, cIndex.k, cIndex.l ) )
                 {
                   cardDroppedOn.addClass('gone');
@@ -171,7 +166,7 @@ var $ = jQuery,
 
     drawFromMainDeck = function ( wasKing ) {
       wasKing = wasKing === undefined ? false : true;
-
+      ;;;window.console&&console.log( 'kall á drawFromMainDeck með: ' + wasKing );
       var result = false;
         $.ajax({
           url: '/drawFromMainDeck',
@@ -198,6 +193,7 @@ var $ = jQuery,
 
           if( drawDeck.find('.card').length && !wasKing )
           {
+            ;;;window.console&&console.log( 'empty trashDeck' );
             trashDeck.empty();
             trashDeck.prepend( newTrashCard );
           }
@@ -230,6 +226,7 @@ var $ = jQuery,
         if( result != false )
         {
           trashDeck.prepend( result );
+          ;;;window.console&&console.log( 'ACTIVE' );
         }
     },
 

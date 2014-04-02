@@ -88,17 +88,6 @@ def deckToPyramid( fromDraw, i, j):
         };
 
 
-@route('/deckToDeck')
-def deckToDeck():
-    drawCard = pyramid.drawDeckTop()
-    activeCard = pyramid.activeDeckTop
-
-    if drawCard is False or activeCard is False:
-        return { 'success': False };
-
-    return { 'success': pyramid.deckToDeck( drawCard, activeCard ) };
-
-
 @route('/checkKingPyr/:i/:j')
 def checkKingPyr(i, j):
     return { 'success': pyramid.checkKingPyr( int( i ), int( j ) ) };

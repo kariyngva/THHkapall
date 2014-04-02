@@ -105,13 +105,18 @@ var $ = jQuery,
                   cardDroppedOn.addClass('gone');
                   cardDragged.addClass('gone');
                 }
-                else if ( isDeckToDeck && deckToDeck() )
+                else if ( isDeckToDeck && deckToDeck() ) //erum við að draga milli stokka, og er það leyfilegt
                 {
                   cardDragged.addClass('gone');
                   cardDroppedOn.addClass('gone');
 
+                  cardDragged.remove();
+                  cardDroppedOn.remove();
+
+
                   //TODO:búa til fall sem checkar á trashdeck og bætir við efsta spilinu ef eitthvað
-                  drawFromMainDeck();
+                  drawFromMainDeck( true );
+                  drawFromActiveDeck();
                 }
 
                 if( cardDragged.parents('.drawdeck').length && cardDroppedOn.parents('.pyramid').length &&

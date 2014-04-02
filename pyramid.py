@@ -1,6 +1,7 @@
 ﻿#coding=UTF-8
 from collections import deque
 import copy
+import time
 from Card import *
 from Deck import *
 
@@ -30,6 +31,7 @@ class Pyramid:
 		self.tempDrawDeck = deque()
 		self.tempDiscardpile = deque()
 		self.tempScore = 0
+		self.startTime = time.ctime()
 
 	#byggir píramídann sjálfann sem lista af listum
 	#hvert stak í listunum inniheldur spil og hnit fyrir foreldri og börn sbr. tré
@@ -205,3 +207,6 @@ class Pyramid:
 
 	def getScore(self):
 		return self.score
+
+	def getStartTime(self):
+		return self.startTime

@@ -33,6 +33,7 @@
     </div>
 
     <div class="score">{{ score }}</div>
+    <div class="time"><span class="minutes">00</span>:<span class="seconds">00</span></div>
 
 
 <div class="decks">
@@ -81,7 +82,7 @@
             <div class="row r{{ i }}">
             %for j in range ( 0, i + 1 ):
                 %card = pyramid[i][j][0]
-                %isgone = '' 
+                %isgone = 'visible' if pyramid[i][j][3] is True else 'hidden'
                 %if card.value > 10:
                     <div class="card {{ card.suit }} {{ card.rank }} {{ isgone }}">
                 %else:

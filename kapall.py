@@ -115,14 +115,22 @@ def checkKingDeck(fromDraw):
         'success': pyramid.checkKingDeck( int( fromDraw ), card )
         };
 
+
 @route('/decktodeck')
 def deckToDeck():
     return { 'success': pyramid.deckToDeck() };
+
+
+@route('/getstarttime')
+def getStartTime():
+    return { 'starttime': pyramid.getStartTime() }
+
 
 ##Debug
 @route('/debug')
 def debug():
     return template( 'debug', pyramid = pyramid )
+
 
 @route('/static/<filename>')
 def server_static(filename):

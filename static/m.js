@@ -73,10 +73,11 @@ var $ = jQuery,
 
                 if( card.parents('.pyramid').length && isFree( cindex.i, cindex.j ) && (val1 + val2) === 13 )
                 {
+                  console.log("bleh")
                   return true;
-                }
 
-                if( (val1 + val2) === 13 )
+                }
+                else if( (!card.parents('.pyramid').length && val1 + val2) === 13 )
                 {
                   return true;
                 }

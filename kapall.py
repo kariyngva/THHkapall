@@ -71,6 +71,10 @@ def highscore():
 def updatescore():
     return { 'score': pyramid.getScore() }
 
+@route('checkwin')
+def checkwin():
+    return {'success' : pyramid.checkWin()}
+
 
 @route('/isfree/:i/:j')
 def isfree(i,j):

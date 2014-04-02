@@ -39,7 +39,7 @@ var $ = jQuery,
                         j: parseInt( card.find('.j').text(), 10 ) || 0
                       },
                     canMoveCard = card.parents('.pyramid').length ? isFree( cardIndex.i, cardIndex.j ) : true;
-
+                
                 //Stop a card from being dragged if it's not free
                 //Should always be at the bottom so we don't prematurly return
                 if( !canMoveCard  )
@@ -70,7 +70,7 @@ var $ = jQuery,
                       j: parseInt(card.find('.j').text(), 10 )
                     };
                 //Ætlum ekki að accepta drop ef spilin eru ekki með 13 sem samanlagt gildi
-
+              
                 if( card.parents('.pyramid').length && isFree( cindex.i, cindex.j ) && (val1 + val2) === 13 )
                 {
                   return true;

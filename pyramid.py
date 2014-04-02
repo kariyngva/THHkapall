@@ -186,7 +186,7 @@ class Pyramid:
 		if card.value == 13:
 			self.saveState()
 			if fromDraw:
-				self.discardPile.append(self.drawDeck.pop())
+				self.discardPile.append(self.drawDeck.popleft())
 			else:
 				self.discardPile.append(self.activeDeck.pop())
 			self.score += 100

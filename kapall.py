@@ -20,6 +20,14 @@ def drawFromDeck():
     return { 'suit': card.suit, 'rank': card.rank, 'val': card.value, 'lastcard': lastCard }
 
 
+@route('/getTopOfDraw')
+def getTopOfDraw():
+    card = pyramid.drawDeckTop()
+    if card is False:
+        return { 'lastcard': -1 }
+    return { 'suit': card.suit, 'rank': card.rank, 'val': card.value, 'lastcard': 1 }
+
+
 @route('/drawFromActiveDeck')
 def drawFromActiveDeck():
     card = pyramid.activeDeckTop()
@@ -68,6 +76,10 @@ def highscore():
 def updatescore():
     return { 'score': pyramid.getScore() }
 
+@route('checkwin')
+def checkwin():
+    return {'success' : pyramid.checkWin()}
+
 
 @route('/isfree/:i/:j')
 def isfree(i,j):
@@ -112,6 +124,7 @@ def checkKingDeck(fromDraw):
 
 @route('/decktodeck')
 def deckToDeck():
+    print "deckTodeck - from kapall.py"
     return { 'success': pyramid.deckToDeck() };
 
 

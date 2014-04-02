@@ -84,7 +84,7 @@ class Pyramid:
 			#self.drawDeck = deque()
 			self.activeDeck.reverse()
 			self.drawDeck = copy.deepcopy(self.activeDeck)
-			self.activeDeck= deque()
+			self.activeDeck = deque()
 			self.drawDeckdraw()
 			#for i in range(len(activeDeck)):
 			#	drawDeck.append(self.activeDeck.pop())

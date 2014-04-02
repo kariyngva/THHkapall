@@ -20,6 +20,14 @@ def drawFromDeck():
     return { 'suit': card.suit, 'rank': card.rank, 'val': card.value, 'lastcard': lastCard }
 
 
+@route('/drawFromMainDeck2')
+def drawFromDeck():
+    card = pyramid.drawDeckTop()
+    if card is False:
+        return { 'lastcard': -1 }
+    return { 'suit': card.suit, 'rank': card.rank, 'val': card.value, 'lastcard': 1 }
+
+
 @route('/drawFromActiveDeck')
 def drawFromActiveDeck():
     card = pyramid.activeDeckTop()
@@ -107,6 +115,7 @@ def checkKingDeck(fromDraw):
 
 @route('/decktodeck')
 def deckToDeck():
+    print "deckTodeck - from kapall.py"
     return { 'success': pyramid.deckToDeck() };
 
 

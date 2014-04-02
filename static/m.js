@@ -69,8 +69,8 @@ var $ = jQuery,
                       i: parseInt(card.find('.i').text(), 10 ),
                       j: parseInt(card.find('.j').text(), 10 )
                     };
-                //Ætlum ekki að accepta drop ef spilin eru ekki með 13 sem samanlagt gildi
 
+                //Ætlum ekki að accepta drop ef spilin eru ekki með 13 sem samanlagt gildi
                 if( card.parents('.pyramid').length && isFree( cindex.i, cindex.j ) && (val1 + val2) === 13 )
                 {
                   return true;
@@ -112,7 +112,8 @@ var $ = jQuery,
                   cardDragged.remove();
                   cardDroppedOn.remove();
 
-                  drawFromMainDeck( true );
+                  //drawFromMainDeck( true );
+                  drawFromMainDeck2();
                   drawFromActiveDeck();
                 }
                 else if( cardDragged.parents('.drawdeck').length && cardDroppedOn.parents('.pyramid').length &&
@@ -121,7 +122,7 @@ var $ = jQuery,
                   cardDroppedOn.addClass('gone');
                   cardDragged.addClass('gone');
 
-                  drawFromMainDeck();
+                  drawFromMainDeck2();
                 }
                 else if( cardDragged.parents('.trashdeck').length && cardDroppedOn.parents('.pyramid').length &&
                          deckToPyramid( cardDragged, cIndex.k, cIndex.l ) )
@@ -133,13 +134,6 @@ var $ = jQuery,
                 }
 
                 updateScore();
-
-            },
-            over: function (event, ui) {
-
-            },
-            out: function (event, ui) {
-                $(this).css("border-color", "pink");
             }
           });
       },
@@ -198,6 +192,35 @@ var $ = jQuery,
             trashDeck.prepend( newTrashCard );
           }
 
+          drawDeck.prepend( result );
+        }
+    },
+
+
+    drawFromMainDeck2 = function ( wasKing ) {
+      wasKing = wasKing === undefined ? false : true;
+      var result = false;
+        $.ajax({
+          url: '/drawFromMainDeck2',
+          async: false,
+          dataType: 'json'
+        }).done( function( data ) {
+            if( data.lastcard != -1 )
+            {
+              var isHigh = data.val > 10 ? data.rank : '';
+              result = $('<div class="card free ' + data.suit + ' ' + isHigh + '">' +
+                            '<span class="value v1">' + data.val + '</span>' +
+                            '<span class="value v2">' + data.val + '</span>' +
+                          '</div>');
+
+              //Gerum spilið drag/droppable
+              initDragDrop( result );
+            }
+          });
+
+        //Gerum ekkert ef stokkurinn er tómur.
+        if( result != false )
+        {
           drawDeck.prepend( result );
         }
     },
@@ -350,11 +373,6 @@ var $ = jQuery,
         {
           card.addClass('gone');
         }
-        /*else if( checkKingDeck( card ) )
-        {
-          card.addClass('gone');
-          //drawFromMainDeck();
-        }*/
 
         updateScore();
       });

@@ -59,6 +59,17 @@
         %end
     </ul>
 
+    <h2>Discardpile</h2>
+    <ul>
+        %for i in range(0, len(pyramid.discardPile)):
+            %card = pyramid.discardPile[i]
+        <li>
+            <span>[{{ card.suit }}]</span>
+            <span>[{{ card.value }}]</span>
+        </li>
+        %end
+    </ul>
+
 <script src="static/m.js"></script>
 </body>
 </html>

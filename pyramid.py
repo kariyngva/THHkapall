@@ -73,6 +73,12 @@ class Pyramid:
 		self.difficulty = self.tempDifficulty
 		self.score = self.tempScore
 
+	def checkWin(self):
+		if len(self.discardPile) >= 52:
+			return True
+		return False
+
+
 	#dregur spil úr bunka og setur það í activeDeck
 	#þá sést næsta spil í drawDeck
 	def drawDeckdraw(self):
@@ -131,6 +137,8 @@ class Pyramid:
 	#i1 og j1 er hnit fyrir spilið sem er verið að draga
 	#i2 og j2 eru hnitin fyrir spilið sem verið er að droppa á
 	def pyramidToPyramid(self, i1, j1, i2, j2):
+		print "Discard Pile : "
+		print len(self.discardPile)
 		if self.checkFree(i2, j2):
 			if self.pyramid[i1][j1][0].value + self.pyramid[i2][j2][0].value == 13:
 				self.saveState()

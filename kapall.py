@@ -53,11 +53,16 @@ def undolastmove():
     redirect("/")
 
 
+@route('/highscorejson')
+def highscorejson():
+    return {"score": top10_highscores()}
+    
+
+
 @route('/highscore')
 def highscore():
-    dafuq= top10_highscores()
-    return {"score": dafuq}
-    #redirect("/")
+        return template( 'highscore', scores = top10_highscores())
+    
 
 @route('/updatescore')
 def updatescore():

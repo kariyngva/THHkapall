@@ -163,6 +163,9 @@ class Pyramid:
 
 	def deckToDeck(self):
 		if self.drawDeckTop() and self.activeDeckTop():
+			print "spilin úr draw og active : "
+			print self.drawDeckTop().value
+			print self.activeDeckTop().value
 			if self.drawDeckTop().value + self.activeDeckTop().value == 13:
 				self.saveState()
 				self.discardPile.append(self.drawDeck.popleft())

@@ -21,6 +21,7 @@ def input_score(score,name):
     f = open("highscore.txt",'a')
     f.write(str(score)+'\t'+str(name)+'\t'+str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))+'\n') #skrifum score, nafn og timasetningu i highscore.txt
     f.close()
+    return True
 #dæmi
 #mafakka="turt"
 #input_score(100,mafakka)

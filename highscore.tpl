@@ -17,8 +17,7 @@
     %include nav.tpl
     <h2>Highscore</h2>
     <ul>
-        %for score in scores:
-            
+        %for score in scores:   
         <li>
             <span>{{ score[0] }}</span>
             <span>{{ score[1] }}</span>

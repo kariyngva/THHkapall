@@ -46,12 +46,11 @@ class testKapallFunctions(unittest.TestCase):
         self.assertNotEqual(leikur1.difficulty, leikur2.difficulty)
         self.assertTrue(leikur1.deck)
         self.assertTrue(leikur2.pyramid)
-        self.assertFalse(leikur2.trashDeck)
-        self.assertFalse(leikur2.trashDeck)
+        
 
     def test_highscore(self):
 
-        self.assertTrue(input_score(1,'abc'))
+        self.assertTrue(input_score(1,'test'))
         self.assertTrue(top10_highscores())
 
 

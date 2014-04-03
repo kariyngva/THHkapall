@@ -3,7 +3,8 @@ from bottle import route, run, template, post, request, static_file, redirect
 from pyramid import *
 from highscore import*
 
-pyramid = Pyramid(3)
+gameDifficulty = 3 #default
+pyramid = Pyramid( gameDifficulty )
 
 @route('/')
 def index():
@@ -39,13 +40,24 @@ def drawFromActiveDeck():
 
 
 @route('/setDifficulty/:difficulty')
-def setDifficulty(difficulty='easy'):
-    pyramid.setDifficulty(difficulty)
+def setDifficulty(difficulty):
+    global gameDifficulty
+    gameDifficulty = difficulty
+    pyramid.newGame( gameDifficulty )
+    redirect('/')
+
+
+@route('/sethighscore/:name')
+def sethighscore(name):
+    input_score( pyramid.getScore(), name )
 
 
 @route('/newgame')
 def newGame():
-    pyramid.newGame(1)
+    global gameDifficulty
+    print "--------gameDifficulty--------"
+    print gameDifficulty
+    pyramid.newGame( gameDifficulty )
     redirect("/")
 
 
@@ -63,18 +75,18 @@ def undolastmove():
 
 @route('/highscorejson')
 def highscorejson():
-    return {"score": top10_highscores()}
-    
+    return { "score": top10_highscores() }
 
 
 @route('/highscore')
 def highscore():
         return template( 'highscore', scores = top10_highscores())
-    
+
 
 @route('/updatescore')
 def updatescore():
     return { 'score': pyramid.getScore() }
+
 
 @route('checkwin')
 def checkwin():

@@ -7,9 +7,9 @@
           <li class="difficulty">
             <span>Set difficulty</span>
             <ul>
-              <li><a href="/setDifficulty/easy">Easy</a></li>
-              <li><a href="/setDifficulty/normal">Normal</a></li>
-              <li><a href="/setDifficulty/hard">Hard</a></li>
+              <li><a href="/setDifficulty/6" title="This will create a new game">Easy</a></li>
+              <li><a href="/setDifficulty/3" title="This will create a new game">Medium</a></li>
+              <li><a href="/setDifficulty/1" title="This will create a new game">Hard</a></li>
             </ul>
           </li>
         </ul>

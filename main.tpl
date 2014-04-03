@@ -21,29 +21,13 @@
         <div class="time">Tími <span class="minutes">00</span>:<span class="seconds">00</span></div>
     </div>
 
-<div class="nav">
-    <ul>
-      <li><a href="/newgame">New game</a></li>
-      <li><a href="/resetgame">Reset game</a></li>
-      <li><a href="/undolastmove">Undo last move</a></li>
-      <li><a href="/highscore">Highscore</a></li>
-      <li class="difficulty">
-        <span>Set difficulty</span>
-        <ul>
-          <li><a href="/setDifficulty/easy">Easy</a></li>
-          <li><a href="/setDifficulty/normal">Normal</a></li>
-          <li><a href="/setDifficulty/hard">Hard</a></li>
-        </ul>
-      </li>
-    </ul>
-</div>
-
+%include nav.tpl
 
 
 <div class="gamewrapper">
     <div class="decks">
         <div class="drawdeck">
-            %if drawDeck.value > 10:
+            %if drawDeck != False and drawDeck.value > 10:
                 <div class="card free {{ drawDeck.suit }} {{ drawDeck.rank }}">
             %else:
                 <div class="card free {{ drawDeck.suit }}">

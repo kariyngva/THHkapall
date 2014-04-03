@@ -6,10 +6,10 @@ class Deck:
 	def __init__(self):
 		self.cards = []
 		suit = ["hearts", "clubs", "diamonds", "spades"]
-		rank = ["dud", "ace", "deuce", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"]
+		rank = ["ace", "deuce", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"]
 		for i in range(4):
-			for j in range(1, 14):
-				self.cards.append(Card(suit[i], rank[j], j))
+			for card in rank:
+				self.cards.append( Card( suit[i], card, rank.index(card)+1 ) )
 		self.shuffle()
 	#randomize deck
 	def shuffle(self):
@@ -20,4 +20,3 @@ class Deck:
 	#give the card count
 	def count(self):
 		return len(self.cards)
-		

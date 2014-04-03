@@ -39,7 +39,7 @@ var $ = jQuery,
                         j: parseInt( card.find('.j').text(), 10 ) || 0
                       },
                     canMoveCard = card.parents('.pyramid').length ? isFree( cardIndex.i, cardIndex.j ) : true;
-                
+
                 //Stop a card from being dragged if it's not free
                 //Should always be at the bottom so we don't prematurly return
                 if( !canMoveCard  )
@@ -149,8 +149,12 @@ var $ = jQuery,
             if( isGameWon() )
             {
               setTimeout(function () {
-                alert("Til hamingju þú hefur unnið!");
-                }, 1000);
+                var name = prompt("Til hamingju þú hefur unnið! Sláðu inn nafnið þitt", "Panda");
+                if( name )
+                {
+                  setHighscore( name );
+                }
+                }, 500);
             }
           });
     },
@@ -340,6 +344,14 @@ var $ = jQuery,
               card.remove();
           });
         return result;
+      },
+
+    setHighscore = function ( name ) {
+        $.ajax({
+          url: '/sethighscore/' + name
+        }).done(function () {
+          window.location = '/highscore';
+          });
       },
 
     isGameWon = function () {

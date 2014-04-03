@@ -1,14 +1,34 @@
-
+@font-face {
+    font-family: 'Open Sans';
+    src: url('fonts/OpenSans-Regular-webfont.eot');
+    src: url('fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/OpenSans-Regular-webfont.woff') format('woff'),
+         url('fonts/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('fonts/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'icomoon';
+    src:url('fonts/icomoon.eot?-v1a1y5');
+    src:url('fonts/icomoon.eot?#iefix-v1a1y5') format('embedded-opentype'),
+        url('fonts/icomoon.woff?-v1a1y5') format('woff'),
+        url('fonts/icomoon.ttf?-v1a1y5') format('truetype'),
+        url('fonts/icomoon.svg?-v1a1y5#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 body {
-    position: relative;
+    background: url(i/body-bg.png) 0 0 repeat;
+    font-family: 'Open Sans', Arial;
     min-height: 100%;
     position: relative;
-    padding: 0 0 0 30px;
+    padding: 0 0 0 50px;
     margin: 0;
 }
 
 .nav {
-    background-color: rgba(0,0,0, .5);
+    background: rgba(0,0,0, .5) url(i/nav-icon.png) 174px 8px no-repeat;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -17,15 +37,28 @@ body {
     min-height: 100%;
     height: 100%;
     z-index: 11;
+    padding-top: 30px;
+    -webkit-transition: margin .08s ease-in-out;
+    transition:         margin .08s ease-in-out;
 }
 .nav:hover,
 .nav:focus,
 .nav:active {
-    margin-left: -40px;
+    margin-left: -50px;
 }
-
-.current {
-    border: 1px solid red;
+.nav li {
+    list-style: none;
+    margin: 10px 0;
+}
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 #000;
+}
+.nav a:hover,
+.nav a:focus,
+.nav a:active {
+    color: #ccc;
 }
 
 .gamewrapper {
@@ -38,14 +71,17 @@ body {
 
 .decks {
     clear: both;
-    width: 260px;
     position: absolute;
+    left: 10%;
+    top: 40px;
+    padding: 12px 22px 6px 22px;
+    border: 1px solid rgba(0,0,0, .25);
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 0 70px 10px rgba(0,0,0, .2);
+    box-shadow:         inset 0 0 70px 10px rgba(0,0,0, .2);
 }
 .drawdeck {
-    border: 1px solid red;
-}
-.trashdeck {
-    border: 1px solid blue;
+    margin-right: 10px;
 }
 .drawdeck,
 .trashdeck {
@@ -165,9 +201,15 @@ body {
 }
 
 .topbar {
-    text-align: center;
+    background-color: rgba(0,0,0, .2);
     padding: 10px;
-    margin-bottom: 30px;
+    margin: 0 auto 30px;
+    width: 200px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    text-align: center;
+    color: #fff;
+    text-shadow: -1px -1px 0 #000;
 }
 .topbar div {
     display: inline-block;

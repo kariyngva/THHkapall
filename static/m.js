@@ -172,7 +172,7 @@ var $ = jQuery,
         }).done( function( data ) {
             if( data.lastcard != -1 )
             {
-              var isHigh = data.val > 10 ? data.rank : '';
+              var isHigh = data.val > 9 || data.val === 1  ? data.rank : '';
               result = $('<div class="card free ' + data.suit + ' ' + isHigh + '">' +
                             '<span class="value v1">' + data.val + '</span>' +
                             '<span class="value v2">' + data.val + '</span>' +

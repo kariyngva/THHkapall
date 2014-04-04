@@ -169,51 +169,80 @@ body .card.flipped {
     background: url(i/spades.svg) 0 0 no-repeat;
 }
 .card .index,
+.ace .value,
 .jack .value,
 .queen .value,
 .king .value { position:absolute;right:9999px;left:auto; }
 
 /* kings */
 .hearts.king {
-    background: url(i/king_hearts.svg) 0 0 no-repeat;
+    background: url(i/king_hearts_custom.png) 0 0 no-repeat;
 }
 .spades.king {
-    background: url(i/king_spades.svg) 0 0 no-repeat;
+    background: url(i/king_spades_custom.png) 0 0 no-repeat;
 }
 .diamonds.king {
-    background: url(i/king_diamonds.svg) 0 0 no-repeat;
+    background: url(i/king_diamonds_custom.png) 0 0 no-repeat;
 }
 .clubs.king {
-    background: url(i/king_clubs.svg) 0 0 no-repeat;
+    background: url(i/king_clubs_custom.png) 0 0 no-repeat;
 }
 
 
 /* queens */
 .hearts.queen {
-    background: url(i/queen_hearts.svg) 0 0 no-repeat;
+    background: url(i/queen_hearts_custom.png) 0 0 no-repeat;
 }
 .spades.queen {
-    background: url(i/queen_spades.svg) 0 0 no-repeat;
+    background: url(i/queen_spades_custom.png) 0 0 no-repeat;
 }
 .diamonds.queen {
-    background: url(i/queen_diamonds.svg) 0 0 no-repeat;
+    background: url(i/queen_diamonds_custom.png) 0 0 no-repeat;
 }
 .clubs.queen {
-    background: url(i/queen_clubs.svg) 0 0 no-repeat;
+    background: url(i/queen_clubs_custom.png) 0 0 no-repeat;
 }
 
 /* jacks */
 .hearts.jack {
-    background: url(i/jack_hearts.svg) 0 0 no-repeat;
+    background: url(i/jack_hearts_custom.png) 0 0 no-repeat;
 }
 .spades.jack {
-    background: url(i/jack_spades.svg) 0 0 no-repeat;
+    background: url(i/jack_spades_custom.png) 0 0 no-repeat;
 }
 .diamonds.jack {
-    background: url(i/jack_diamonds.svg) 0 0 no-repeat;
+    background: url(i/jack_diamonds_custom.png) 0 0 no-repeat;
 }
 .clubs.jack {
-    background: url(i/jack_clubs.svg) 0 0 no-repeat;
+    background: url(i/jack_clubs_custom.png) 0 0 no-repeat;
+}
+
+/* aces */
+.hearts.ace {
+    background: url(i/ace_hearts_custom.png) 0 0 no-repeat;
+}
+.spades.aces {
+    background: url(i/ace_spades_custom.png) 0 0 no-repeat;
+}
+.diamonds.ace {
+    background: url(i/ace_diamonds_custom.png) 0 0 no-repeat;
+}
+.clubs.ace {
+    background: url(i/ace_clubs_custom.png) 0 0 no-repeat;
+}
+
+/* ten */
+.hearts.ten {
+    background: url(i/ten_hearts_custom.png) 0 0 no-repeat;
+}
+.spades.tens {
+    background: url(i/ten_spades_custom.png) 0 0 no-repeat;
+}
+.diamonds.ten {
+    background: url(i/ten_diamonds_custom.png) 0 0 no-repeat;
+}
+.clubs.ten {
+    background: url(i/ten_clubs_custom.png) 0 0 no-repeat;
 }
 
 /* css transition to hide cards */

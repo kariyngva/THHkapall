@@ -24,7 +24,7 @@
     <div class="decks">
         <div class="drawdeck">
             %if drawDeck != False:
-                %if drawDeck.value > 10:
+                %if drawDeck.value > 9 or drawDeck.value == 1:
                     <div class="{{ cardClass }} card free {{ drawDeck.suit }} {{ drawDeck.rank }}">
                 %else:
                     <div class="{{ cardClass }} card free {{ drawDeck.suit }}">
@@ -42,7 +42,7 @@
         <div class="trashdeck">
             %if len( activeDeck ) > 0:
                 %activeDeckTop = activeDeck[-1]
-                %if activeDeckTop.value > 10:
+                %if activeDeckTop.value > 9 or activeDeckTop.value == 1:
                     <div class="{{ cardClass }} card free {{ activeDeckTop.suit }} {{ activeDeckTop.rank }}">
                 %else:
                     <div class="{{ cardClass }} card free {{ activeDeckTop.suit }}">
@@ -70,7 +70,7 @@
             %for j in range ( 0, i + 1 ):
                 %card = pyramid[i][j][0]
                 %isgone = 'visible' if pyramid[i][j][3] is True else 'hidden'
-                %if card.value > 10:
+                %if card.value > 9 or card.value == 1:
                     <div class="{{ cardClass }} card {{ card.suit }} {{ card.rank }} {{ isgone }}">
                 %else:
                     <div class="{{ cardClass }} card {{ card.suit }} {{ isgone }}">

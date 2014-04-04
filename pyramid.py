@@ -58,6 +58,9 @@ class Pyramid:
 		#need to save score state
 
 	def returnToInit(self):
+		self.drawDeck = deque() 
+		self.activeDeck = deque()
+		self.pyramid = []
 		self.pyramid = copy.deepcopy(self.initPyramid)
 		self.drawDeck = copy.deepcopy(self.initDrawDeck)
 		self.activeDeck = deque()
@@ -74,9 +77,10 @@ class Pyramid:
 		self.score = self.tempScore
 
 	def checkWin(self):
-		if len(self.discardPile) >= 52:
-			return True
-		return False
+		for i in len(self.pyramid):
+			if pyramid[i][3]:
+				return False
+		return True
 
 
 	#dregur spil úr bunka og setur það í activeDeck

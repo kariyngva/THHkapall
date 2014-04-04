@@ -1,23 +1,19 @@
 <!DOCTYPE html>
-
-<!--[if lt IE 9]>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" class="msie"><![endif]--><!--[if gte IE 9]><!-->
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><!--<![endif]-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-  <title></title>
+  <title>Pyramid Solitare</title>
   <link href="static/m.css" rel="stylesheet" />
   <script src="static/jquery-1.11.0.min.js"></script>
   <script src="static/jquery-ui-1.10.4.custom.min.js"></script>
-
 </head>
 
 <body>
 
     <div class="topbar">
-        <div>Score: <span class="">{{ score }}</span></div>
+        <div>Score: <span class="score">{{ score }}</span></div>
         <div class="time">Time <span class="minutes">00</span>:<span class="seconds">00</span></div>
     </div>
 

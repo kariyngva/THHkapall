@@ -18,13 +18,19 @@
     font-weight: normal;
     font-style: normal;
 }
+html {
+    height: 100%;
+}
 body {
     background: url(i/body-bg.png) 0 0 repeat;
     font-family: 'Open Sans', Arial;
     min-height: 100%;
-    position: relative;
     padding: 0 0 0 50px;
     margin: 0;
+}
+h1, h2, h3, h4 {
+    color: #fff;
+    text-shadow: -1px -1px 0 #000;
 }
 
 .nav {
@@ -41,6 +47,7 @@ body {
     -webkit-transition: margin .08s ease-in-out;
     transition:         margin .08s ease-in-out;
 }
+.nav:after { content:""; display:block; clear:both; height:0;  visibility:hidden; }
 .nav:hover,
 .nav:focus,
 .nav:active {
@@ -49,6 +56,7 @@ body {
 .nav li {
     list-style: none;
     margin: 10px 0;
+    color: #ccc;
 }
 .nav a {
     color: #fff;
@@ -225,7 +233,7 @@ body .card.flipped {
     background-color: rgba(0,0,0, .2);
     padding: 10px;
     margin: 0 auto 30px;
-    width: 200px;
+    width: 270px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     text-align: center;

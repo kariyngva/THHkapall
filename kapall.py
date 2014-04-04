@@ -85,7 +85,7 @@ def highscorejson():
 
 @route('/highscore')
 def highscore():
-        return template( 'highscore', scores = top10_highscores())
+        return template( 'highscore', scores = top10_highscores() )
 
 
 @route('/updatescore')

@@ -58,7 +58,7 @@ class Pyramid:
 		#need to save score state
 
 	def returnToInit(self):
-		self.drawDeck = deque() 
+		self.drawDeck = deque()
 		self.activeDeck = deque()
 		self.pyramid = []
 		self.pyramid = copy.deepcopy(self.initPyramid)
@@ -77,7 +77,7 @@ class Pyramid:
 		self.score = self.tempScore
 
 	def checkWin(self):
-		if pyramid[0][0][3] == True:
+		if self.pyramid[0][0][3] == True:
 			return False
 		return True
 

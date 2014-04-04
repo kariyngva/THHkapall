@@ -17,8 +17,8 @@
 <body>
 
     <div class="topbar">
-        <div class="score">Stig: {{ score }}</div>
-        <div class="time">Tími <span class="minutes">00</span>:<span class="seconds">00</span></div>
+        <div>Score: <span class="">{{ score }}</span></div>
+        <div class="time">Time <span class="minutes">00</span>:<span class="seconds">00</span></div>
     </div>
 
 %include nav.tpl
@@ -27,11 +27,12 @@
 <div class="gamewrapper">
     <div class="decks">
         <div class="drawdeck">
-            %if drawDeck != False and drawDeck.value > 10:
-                <div class="card free {{ drawDeck.suit }} {{ drawDeck.rank }}">
-            %else:
-                <div class="card free {{ drawDeck.suit }}">
-            %end
+            %if drawDeck != False:
+                %if drawDeck.value > 10:
+                    <div class="{{ cardClass }} card free {{ drawDeck.suit }} {{ drawDeck.rank }}">
+                %else:
+                    <div class="{{ cardClass }} card free {{ drawDeck.suit }}">
+                %end
                 <span class="value v1">{{ drawDeck.value }}</span>
                 <span class="value v2">{{ drawDeck.value }}</span>
                 <span class="rank">{{ drawDeck.rank }}</span>
@@ -39,15 +40,16 @@
                 <span class="index i">0</span>
                 <span class="index j">0</span>
             </div>
+            %end
         </div>
 
         <div class="trashdeck">
             %if len( activeDeck ) > 0:
                 %activeDeckTop = activeDeck[-1]
                 %if activeDeckTop.value > 10:
-                    <div class="card free {{ activeDeckTop.suit }} {{ activeDeckTop.rank }}">
+                    <div class="{{ cardClass }} card free {{ activeDeckTop.suit }} {{ activeDeckTop.rank }}">
                 %else:
-                    <div class="card free {{ activeDeckTop.suit }}">
+                    <div class="{{ cardClass }} card free {{ activeDeckTop.suit }}">
                 %end
                     <span class="value v1">{{ activeDeckTop.value }}</span>
                     <span class="value v2">{{ activeDeckTop.value }}</span>
@@ -73,9 +75,9 @@
                 %card = pyramid[i][j][0]
                 %isgone = 'visible' if pyramid[i][j][3] is True else 'hidden'
                 %if card.value > 10:
-                    <div class="card {{ card.suit }} {{ card.rank }} {{ isgone }}">
+                    <div class="{{ cardClass }} card {{ card.suit }} {{ card.rank }} {{ isgone }}">
                 %else:
-                    <div class="card {{ card.suit }} {{ isgone }}">
+                    <div class="{{ cardClass }} card {{ card.suit }} {{ isgone }}">
                 %end
                     <span class="value v1">{{ card.value }}</span>
                     <span class="value v2">{{ card.value }}</span>

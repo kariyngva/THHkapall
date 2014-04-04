@@ -3,14 +3,17 @@ from bottle import route, run, template, post, request, static_file, redirect
 from pyramid import *
 from highscore import*
 
+cardClass = "flipped"
 gameDifficulty = 3 #default
 pyramid = Pyramid( gameDifficulty )
 
 @route('/')
 def index():
     topOfDrawDeck = pyramid.drawDeckTop()
-
-    return template( 'main', drawDeck = topOfDrawDeck, activeDeck = pyramid.activeDeck, pyramid = pyramid.pyramid, score = pyramid.getScore() )
+    global cardClass
+    tempCardClass = cardClass
+    cardClass = ''
+    return template( 'main', drawDeck = topOfDrawDeck, activeDeck = pyramid.activeDeck, pyramid = pyramid.pyramid, score = pyramid.getScore(), cardClass = tempCardClass )
 
 @route('/drawFromMainDeck')
 def drawFromDeck():
@@ -20,8 +23,8 @@ def drawFromDeck():
     return { 'suit': card.suit, 'rank': card.rank, 'val': card.value, 'lastcard': lastCard }
 
 
-@route('/getTopOfDraw')
-def getTopOfDraw():
+@route('/getTopOfMain')
+def getTopOfMain():
     card = pyramid.drawDeckTop()
     if card is False:
         return { 'lastcard': -1 }
@@ -41,6 +44,8 @@ def drawFromActiveDeck():
 @route('/setDifficulty/:difficulty')
 def setDifficulty(difficulty):
     global gameDifficulty
+    global cardClass
+    cardClass = "flipped"
     gameDifficulty = difficulty
     pyramid.newGame( gameDifficulty )
     redirect('/')
@@ -53,15 +58,16 @@ def sethighscore(name):
 
 @route('/newgame')
 def newGame():
-    global gameDifficulty
-    print "--------gameDifficulty--------"
-    print gameDifficulty
+    global cardClass
+    cardClass = "flipped"
     pyramid.newGame( gameDifficulty )
     redirect("/")
 
 
 @route('/resetgame')
 def resetgame():
+    global cardClass
+    cardClass = "flipped"
     pyramid.returnToInit()
     redirect("/")
 

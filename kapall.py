@@ -88,7 +88,7 @@ def updatescore():
     return { 'score': pyramid.getScore() }
 
 
-@route('checkwin')
+@route('/checkwin')
 def checkwin():
     return {'success' : pyramid.checkWin()}
 

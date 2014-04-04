@@ -77,9 +77,8 @@ class Pyramid:
 		self.score = self.tempScore
 
 	def checkWin(self):
-		for i in len(self.pyramid):
-			if pyramid[i][3]:
-				return False
+		if pyramid[0][0][3] == True:
+			return False
 		return True
 
 

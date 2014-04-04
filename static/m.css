@@ -221,7 +221,7 @@ body .card.flipped {
 .hearts.ace {
     background: url(i/ace_hearts_custom.png) 0 0 no-repeat;
 }
-.spades.aces {
+.spades.ace {
     background: url(i/ace_spades_custom.png) 0 0 no-repeat;
 }
 .diamonds.ace {

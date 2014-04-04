@@ -9,13 +9,12 @@ pyramid = Pyramid( gameDifficulty )
 @route('/')
 def index():
     topOfDrawDeck = pyramid.drawDeckTop()
-    #topOfActiveDeck = pyramid.activeDeck
 
     return template( 'main', drawDeck = topOfDrawDeck, activeDeck = pyramid.activeDeck, pyramid = pyramid.pyramid, score = pyramid.getScore() )
 
 @route('/drawFromMainDeck')
 def drawFromDeck():
-    lastCard = pyramid.drawDeckdraw();
+    lastCard = pyramid.drawDeckdraw()
     card = pyramid.drawDeckTop()
 
     return { 'suit': card.suit, 'rank': card.rank, 'val': card.value, 'lastcard': lastCard }

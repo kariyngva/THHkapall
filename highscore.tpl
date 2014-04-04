@@ -18,7 +18,7 @@
           <li>
               <span>{{ score[0] }}</span>
               <span>{{ score[1] }}</span>
-              <span>{{ score[2] }}</span>
+              <!--span>{{ score[2] }}</span-->
           </li>
           %end
       </ul>
